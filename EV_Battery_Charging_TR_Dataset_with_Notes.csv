@@ -1,0 +1,501 @@
+Timestamp,ChargerID,CellID,ChargingStage,PackVoltage_V,CellVoltage_V,DemandVoltage_V,ChargeCurrent_A,DemandCurrent_A,SOC_%,MaxTemp_C,MinTemp_C,AvgTemp_C,AmbientTemp_C,InternalResistance_mOhm,StateOfHealth_%,VibrationLevel_mg,MoistureDetected,BMS_Status,ChargePower_kW,Pressure_kPa,TR_Probability,EventFlag,Notes
+9/3/2025 8:00,CH5,CELL22,End_Of_Charge,326.69,3.633,328.48,84.75,82.87,57,60.76,56.81,58.785,22.83,12.54,87.22,27.8,TRUE,Critical,27.69,118.08,0.874,Alarm,Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 8:01,CH7,CELL7,End_Of_Charge,336.91,4.101,332.69,75.11,72.66,83.07,55.55,53.48,54.515,21.15,5.88,90.72,43.07,TRUE,Warning,25.31,98.74,0.997,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 8:02,CH5,CELL31,Recharge,333.47,4.16,338.13,29.16,30.82,63.16,49.24,46.51,47.875,23.96,4.13,83.16,38.62,FALSE,Warning,9.72,109.72,0.792,Alarm,Normal operation
+9/3/2025 8:03,CH1,CELL23,Handshake,391.13,3.928,390.9,26.96,30.15,56.46,78.09,77.85,77.97,23.67,13.72,84.63,46.85,FALSE,OK,10.54,110.82,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 8:04,CH2,CELL32,End_Of_Charge,301.56,4.052,297.76,19.61,22.99,9.59,63.14,62.57,62.855,23.63,3.06,98.17,2.71,FALSE,OK,5.91,94.57,0.688,Warning,Rapid temp rise
+9/3/2025 8:05,CH1,CELL34,End_Of_Charge,356.33,4.041,355.26,18.67,17.9,67.34,33.01,28.1,30.555,24.86,6.48,94.79,34.55,FALSE,Warning,6.65,112.42,0.665,Warning,Normal operation
+9/3/2025 8:06,CH1,CELL46,Recharge,303.26,3.655,303.94,66.31,69.07,31.58,60.61,57.09,58.85,28.51,9.66,84.79,10.05,TRUE,OK,20.11,91.88,0.772,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 8:07,CH4,CELL26,Handshake,360.4,3.704,356.73,96.31,97.77,93.46,69.67,68.93,69.3,28.45,2.23,97.76,4.4,TRUE,OK,34.71,102.85,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 8:08,CH8,CELL8,Parameter_Config,326.04,3.991,327.59,78.54,82.05,43.05,47.62,47.56,47.59,31.38,8,90.98,11.37,FALSE,Critical,25.61,102.3,0.692,Warning,Normal operation
+9/3/2025 8:09,CH9,CELL25,End_Of_Charge,367.09,3.667,363.73,119.16,121.7,96.98,36.39,34.59,35.49,28.37,5.47,96.04,25.01,FALSE,OK,43.74,107.57,0.826,Alarm,Normal operation
+9/3/2025 8:10,CH9,CELL33,Parameter_Config,324.2,4.038,326.58,39.43,37.52,71.12,65.02,64.24,64.63,25.09,8.74,99.11,41.43,TRUE,OK,12.78,112.47,0.994,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 8:11,CH10,CELL34,Handshake,300.16,3.78,299.19,109.42,108.46,95.44,27.52,25.74,26.63,29.85,12.73,98.98,40.88,FALSE,OK,32.84,108.02,0.763,Alarm,High internal resistance
+9/3/2025 8:12,CH8,CELL2,Handshake,319.33,4.118,321.81,42.25,41.06,64.5,36.26,35.9,36.08,29.37,7.71,96.44,47.23,FALSE,OK,13.49,106.77,0.706,Alarm,Normal operation
+9/3/2025 8:13,CH3,CELL32,Parameter_Config,335.93,3.695,337.53,31.2,31.91,77.95,77.16,74.05,75.605,31.02,3.59,97.34,7,FALSE,Warning,10.48,113.99,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 8:14,CH9,CELL42,Handshake,303.6,4.003,304.86,119.88,121.3,60.57,55.97,52.67,54.32,26.89,9.52,95.48,21.07,FALSE,OK,36.4,112.19,0.884,Alarm,Normal operation
+9/3/2025 8:15,CH8,CELL48,End_Of_Charge,316.03,3.686,318.13,33.52,29.91,61.17,41.06,36.6,38.83,31.27,11.93,80.4,47.7,FALSE,OK,10.59,113.9,0.714,Alarm,Normal operation
+9/3/2025 8:16,CH9,CELL38,Parameter_Config,371.03,3.627,368.77,108.99,113.17,86.4,39.88,39.62,39.75,32.8,1.46,99.25,33.95,TRUE,OK,40.44,114.04,0.833,Alarm,Moisture detected
+9/3/2025 8:17,CH10,CELL42,Recharge,350.44,3.82,351.61,67.28,68.49,81.1,61.45,56.51,58.98,30.12,3.78,85.04,0.73,TRUE,Critical,23.58,113.72,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 8:18,CH9,CELL29,Handshake,371.59,3.727,371.19,61.58,60.78,12.09,64.29,60.07,62.18,26.66,5.31,80.23,13.18,FALSE,OK,22.88,98.37,0.685,Warning,Rapid temp rise
+9/3/2025 8:19,CH10,CELL15,Handshake,325.2,4.031,325.66,21.67,22.74,91.55,48.4,44.12,46.26,22.49,9.24,94.32,43.07,TRUE,OK,7.05,92.75,0.936,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 8:20,CH1,CELL11,Handshake,351.13,3.682,353.81,101.39,100.14,64.92,38.99,38.4,38.695,27.04,14.98,85.32,34.27,FALSE,OK,35.6,98.14,0.704,Alarm,High internal resistance
+9/3/2025 8:21,CH7,CELL4,End_Of_Charge,302.02,4.05,304.69,1.21,4.31,54.01,42.48,39.73,41.105,27.53,2.87,85.47,40.06,TRUE,OK,0.37,116.86,0.703,Alarm,Moisture detected
+9/3/2025 8:22,CH7,CELL5,End_Of_Charge,350.66,3.75,352.27,81.57,77.12,77.52,40.6,36.28,38.44,34.28,3.08,84.2,36.91,TRUE,OK,28.6,115.38,0.802,Alarm,Moisture detected
+9/3/2025 8:23,CH9,CELL13,End_Of_Charge,302.07,4.137,298.91,79.66,76.18,70.92,51.45,47.9,49.675,24.89,1.2,87.86,17.04,FALSE,OK,24.06,94.56,0.868,Alarm,Normal operation
+9/3/2025 8:24,CH4,CELL47,Parameter_Config,362.81,4.174,365.74,10.37,9.53,6.82,33.53,33.39,33.46,27.22,12.09,90.59,16.36,FALSE,OK,3.76,102.97,0.335,Watch,High internal resistance
+9/3/2025 8:25,CH3,CELL34,End_Of_Charge,397.34,3.783,393.39,44.73,48.44,11.72,68.55,64.95,66.75,28.59,1.9,97.87,2.48,TRUE,OK,17.77,105.34,0.757,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 8:26,CH9,CELL18,Recharge,301.4,4.03,303.92,33.24,31.97,93.07,53.09,50.79,51.94,30.3,4.89,80.72,38.62,TRUE,Critical,10.02,106.94,1,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 8:27,CH5,CELL12,Recharge,350.06,3.875,354.78,73.42,69.36,6.79,67.86,64.02,65.94,29.66,7.11,97.61,10.89,FALSE,Warning,25.7,107.79,0.722,Alarm,Rapid temp rise
+9/3/2025 8:28,CH8,CELL36,Parameter_Config,392.96,3.904,397.15,29.42,28.85,6.16,69.81,67.61,68.71,31.32,1.15,88.5,10.84,FALSE,Warning,11.56,90.58,0.733,Alarm,Rapid temp rise
+9/3/2025 8:29,CH3,CELL5,End_Of_Charge,357.72,3.998,362.38,25.89,24.6,80.46,74.85,72.1,73.475,34.39,9.15,99.4,16.92,TRUE,Critical,9.26,98.41,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 8:30,CH7,CELL26,Recharge,314.8,4.067,314.28,78.09,77.8,99.69,44.83,44.53,44.68,28.03,13.61,87.62,9.6,FALSE,OK,24.58,113.3,0.93,Runaway,Critical thermal runaway risk; High internal resistance
+9/3/2025 8:31,CH6,CELL46,Parameter_Config,311.95,4.158,313.14,119.9,124.01,11.12,26.55,24.43,25.49,26.03,2.86,89.25,5.81,FALSE,OK,37.4,90.07,0.343,Watch,Normal operation
+9/3/2025 8:32,CH3,CELL34,Recharge,340.78,3.816,341.65,51.88,49.39,59.09,60.12,58.27,59.195,23.7,6.73,97.62,28.57,TRUE,OK,17.68,92.9,0.923,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 8:33,CH2,CELL23,Handshake,351.74,4.077,355.82,39.16,35.84,83.35,37.37,34.41,35.89,20,1.52,86.92,3.16,TRUE,OK,13.77,92.92,0.811,Alarm,Moisture detected
+9/3/2025 8:34,CH2,CELL31,Handshake,347.19,4.094,343.21,27.1,30.34,46.14,71.26,67.96,69.61,34.52,14.72,81.57,17.17,FALSE,Critical,9.41,93.89,0.966,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 8:35,CH10,CELL29,Handshake,318.69,3.799,323.25,36.31,37,10.17,26.47,22.65,24.56,24.56,4.04,84.04,39.37,TRUE,OK,11.57,94.04,0.324,Watch,Moisture detected
+9/3/2025 8:36,CH9,CELL46,Parameter_Config,381.12,3.662,381.84,78.46,83.03,91.25,38.15,37.66,37.905,33.47,1.42,82.95,3.23,FALSE,Critical,29.9,106.68,0.829,Alarm,Normal operation
+9/3/2025 8:37,CH6,CELL32,Parameter_Config,395.02,3.613,396.19,28.08,25.57,21.14,58.31,56.31,57.31,26.96,4.86,91.48,7.17,TRUE,Warning,11.09,103.24,0.684,Warning,Moisture detected
+9/3/2025 8:38,CH7,CELL2,End_Of_Charge,349.87,3.731,345.92,79.16,77.96,71.24,35.48,33.76,34.62,20.13,1.61,97.1,0.54,FALSE,OK,27.7,115.85,0.732,Alarm,Normal operation
+9/3/2025 8:39,CH6,CELL44,Recharge,322.4,4.105,324.2,39.71,38.19,28.7,62.21,59.7,60.955,34.07,14.11,98.92,37.39,FALSE,OK,12.8,109.15,0.792,Alarm,Rapid temp rise; High internal resistance
+9/3/2025 8:40,CH8,CELL49,Handshake,338.69,3.979,339.8,30.98,35.25,38.64,70.15,67.45,68.8,24.68,12.33,82.77,43.34,TRUE,OK,10.49,119.55,0.919,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 8:41,CH4,CELL42,Parameter_Config,351.11,4.095,349.59,105.54,110.4,76.24,52.13,51.58,51.855,23.62,10.2,99.06,40.18,FALSE,OK,37.06,90.6,0.926,Runaway,Critical thermal runaway risk
+9/3/2025 8:42,CH2,CELL46,Handshake,341.32,3.954,342.18,92.26,90.65,83.76,63.62,59.36,61.49,32.7,6.28,98.56,17.36,FALSE,OK,31.49,96.28,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 8:43,CH5,CELL34,Parameter_Config,321.45,4.104,325.7,72.95,68.71,18.99,65.35,64.19,64.77,22.51,12.71,91.27,19,TRUE,OK,23.45,113.71,0.771,Alarm,Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 8:44,CH4,CELL39,Handshake,378.37,4.091,380.45,50.17,46.78,0.77,74.38,72.83,73.605,25.88,8.43,86.83,40.83,TRUE,OK,18.98,104.92,0.754,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 8:45,CH4,CELL22,Recharge,343.71,4.031,338.93,42.32,41.45,4.21,39.35,37.72,38.535,31.38,12.19,88.07,26.92,FALSE,OK,14.55,108.63,0.384,Watch,High internal resistance
+9/3/2025 8:46,CH5,CELL36,Parameter_Config,316.79,3.664,313.44,53.22,56.74,50.72,68.36,67.79,68.075,34.74,10.06,91.43,22.63,FALSE,OK,16.86,99.61,0.971,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 8:47,CH3,CELL14,Handshake,379.65,4.122,377.58,0.23,-1.04,28.1,65.41,63.53,64.47,33.43,10.56,90.39,32.49,TRUE,Warning,0.09,99.58,0.804,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 8:48,CH4,CELL30,Parameter_Config,339.07,4.096,341.97,103.09,102.59,95.54,26.75,25.83,26.29,27.06,1.73,94.94,19.9,TRUE,OK,34.95,110.24,0.75,Alarm,Moisture detected
+9/3/2025 8:49,CH2,CELL4,Recharge,335.12,4.111,337.27,94.48,95.37,69.76,47.82,47.68,47.75,29.07,6.22,90.31,36.78,FALSE,Warning,31.66,103.56,0.853,Alarm,Normal operation
+9/3/2025 8:50,CH4,CELL35,Handshake,399.97,4.086,400.12,38,41.18,95.78,43.04,39.3,41.17,21.06,11.78,86.69,45.66,TRUE,OK,15.2,92.54,0.944,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 8:51,CH10,CELL13,Parameter_Config,381.33,3.942,378.26,27.5,27.8,3.95,65.48,64.03,64.755,27.3,6.12,89.5,9.06,FALSE,OK,10.49,109.04,0.666,Warning,Rapid temp rise
+9/3/2025 8:52,CH7,CELL46,Parameter_Config,383.85,4.023,382.61,108.05,109.86,48.3,43.38,40.99,42.185,20.22,7.7,95.89,9.28,FALSE,OK,41.47,104.83,0.702,Alarm,Normal operation
+9/3/2025 8:53,CH1,CELL49,Recharge,388.16,3.98,385.64,38.43,39.22,42.27,34.99,33.44,34.215,24.02,8.55,89.88,4.48,TRUE,OK,14.92,119.51,0.602,Warning,Moisture detected
+9/3/2025 8:54,CH5,CELL8,Handshake,356.37,3.75,353.92,107.3,110.19,42.59,78.44,78.43,78.435,26.47,1.81,83.48,20.65,FALSE,OK,38.24,99.45,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 8:55,CH9,CELL22,Handshake,300.09,3.806,303.66,22.03,24.07,14.45,71.03,66.73,68.88,33.94,4.32,97.82,44.84,FALSE,OK,6.61,111.4,0.757,Alarm,Rapid temp rise
+9/3/2025 8:56,CH9,CELL30,Parameter_Config,338.56,4.055,334.14,72.34,70.73,63.09,59.37,55.69,57.53,30.93,5.94,82.27,40.79,TRUE,OK,24.49,119.18,0.886,Alarm,Moisture detected
+9/3/2025 8:57,CH1,CELL2,Recharge,357.95,3.708,356.17,103.66,102.51,17.28,31.72,30.36,31.04,33.36,12.85,86.77,16.15,FALSE,OK,37.11,112.77,0.407,Warning,High internal resistance
+9/3/2025 8:58,CH2,CELL50,Parameter_Config,364.91,3.705,365.38,75.63,70.95,71.68,28.7,26.82,27.76,31.66,14.94,83.71,12.29,TRUE,OK,27.6,95,0.641,Warning,High internal resistance; Moisture detected
+9/3/2025 8:59,CH2,CELL45,Parameter_Config,385.62,3.801,384.41,21.08,23.57,23.32,43.25,38.32,40.785,23.97,14.55,88.2,29.9,FALSE,OK,8.13,114.47,0.541,Warning,High internal resistance
+9/3/2025 9:00,CH2,CELL35,Handshake,359.24,4.048,358.36,69.02,69.31,56.22,42.54,39.82,41.18,30.74,11.46,94.44,29.87,TRUE,Critical,24.79,92.25,0.697,Warning,Moisture detected
+9/3/2025 9:01,CH1,CELL5,Parameter_Config,303.61,3.889,307.86,79.04,74.72,54.34,32.28,28.26,30.27,22.88,5.75,83.09,30.55,FALSE,OK,24,107.53,0.604,Warning,Normal operation
+9/3/2025 9:02,CH6,CELL17,Recharge,355.03,3.809,359.72,116.87,117.67,80.16,69.46,66.44,67.95,24.94,6.54,95.29,14.41,TRUE,Warning,41.49,114.51,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 9:03,CH5,CELL46,End_Of_Charge,349.37,3.634,346.29,103.48,103.98,71.08,63.48,62.3,62.89,27.37,13.98,84.8,37.33,TRUE,OK,36.15,106.25,0.977,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 9:04,CH6,CELL30,Parameter_Config,386.48,3.962,385.33,101.86,104.32,48.88,40.92,39.52,40.22,26.44,8.33,96.95,40.81,FALSE,Warning,39.37,99.68,0.645,Warning,Normal operation
+9/3/2025 9:05,CH10,CELL11,Handshake,358.14,4.086,357.7,50.32,49.22,6.58,38.75,34.27,36.51,23.18,5.8,86.08,47.06,TRUE,OK,18.02,105.54,0.428,Warning,Moisture detected
+9/3/2025 9:06,CH2,CELL19,Parameter_Config,352.11,3.652,355.85,86.69,91.56,46.55,77.81,73.94,75.875,20.2,13.95,94.82,41.75,TRUE,OK,30.52,96.42,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 9:07,CH1,CELL30,Parameter_Config,318.72,3.71,320.41,47.92,44.23,72.92,49.65,48.22,48.935,32.73,9.13,84.87,35.2,FALSE,Critical,15.27,100.26,0.841,Alarm,Normal operation
+9/3/2025 9:08,CH10,CELL10,Recharge,365.75,3.796,361.42,22.23,22.02,85.48,46.96,43.23,45.095,26.14,4.64,87,13.73,TRUE,OK,8.13,93.99,0.899,Alarm,Moisture detected
+9/3/2025 9:09,CH7,CELL24,Parameter_Config,362.88,3.982,360.78,60.61,57.4,77.17,38.94,37,37.97,23.83,3.08,97.12,9.56,FALSE,Warning,21.99,91.73,0.749,Alarm,Normal operation
+9/3/2025 9:10,CH3,CELL23,Parameter_Config,391.39,4.004,392.81,69.16,65.33,49.06,39.62,39.09,39.355,28.89,8.84,95.95,20.6,TRUE,OK,27.07,101.22,0.617,Warning,Moisture detected
+9/3/2025 9:11,CH8,CELL50,Recharge,354.4,3.979,359.33,18.14,15.48,67.61,38.57,37.96,38.265,29.49,12.65,91.13,22.42,TRUE,Critical,6.43,92.29,0.738,Alarm,High internal resistance; Moisture detected
+9/3/2025 9:12,CH8,CELL25,Parameter_Config,336.48,4.006,336.42,91.15,91.76,31.95,59.7,56.15,57.925,28.54,12.51,91.48,31.56,TRUE,OK,30.67,101.79,0.763,Alarm,High internal resistance; Moisture detected
+9/3/2025 9:13,CH9,CELL26,Handshake,300.45,3.894,300.57,61.98,66.57,12.65,47.81,47.06,47.435,27,6.47,82.86,23.82,TRUE,Warning,18.62,118.36,0.519,Warning,Moisture detected
+9/3/2025 9:14,CH2,CELL25,Handshake,307.02,3.918,307.89,113.43,114.38,48.09,50.49,50.01,50.25,28.36,3.66,93.01,18.6,TRUE,Warning,34.83,91.35,0.753,Alarm,Moisture detected
+9/3/2025 9:15,CH3,CELL41,End_Of_Charge,318.69,3.659,319.36,5.76,10.34,45.95,44,39.89,41.945,30.73,11.18,95.5,8.85,FALSE,OK,1.84,98.14,0.693,Warning,Normal operation
+9/3/2025 9:16,CH2,CELL5,Parameter_Config,316.68,3.986,313.18,24.52,21.94,4.73,29.9,26.46,28.18,26.52,11.63,94.38,35.69,TRUE,OK,7.76,105.69,0.334,Watch,Moisture detected
+9/3/2025 9:17,CH4,CELL36,Parameter_Config,307.24,4.007,306.53,112.9,115.24,68.32,40.06,36.79,38.425,30.51,14.42,80.41,38.29,TRUE,Critical,34.69,119.91,0.721,Alarm,High internal resistance; Moisture detected
+9/3/2025 9:18,CH1,CELL25,Parameter_Config,340.24,4.195,343.93,108.48,108.55,41,56.47,54.09,55.28,29.15,12.11,98.65,29.57,TRUE,OK,36.91,100.95,0.782,Alarm,High internal resistance; Moisture detected
+9/3/2025 9:19,CH8,CELL20,End_Of_Charge,350.8,3.825,347.65,103.78,105.54,18.63,39.28,37.87,38.575,29.34,8.7,98.27,26.79,FALSE,OK,36.41,111.42,0.494,Warning,Normal operation
+9/3/2025 9:20,CH4,CELL49,Handshake,333.21,4.172,337.2,12.8,17.08,33.83,31.86,28.77,30.315,33.09,2.72,86.32,26.17,FALSE,OK,4.27,101.93,0.484,Warning,Normal operation
+9/3/2025 9:21,CH8,CELL31,Recharge,371.76,3.792,373.05,1.52,4.83,96.07,50.15,46.47,48.31,33.05,12.1,84.76,7.7,TRUE,OK,0.57,111.39,1,Runaway,Critical thermal runaway risk; High internal resistance; Moisture detected
+9/3/2025 9:22,CH7,CELL19,End_Of_Charge,346.59,3.676,347.54,29.58,25.4,18.54,54.75,54.44,54.595,20.88,9.14,86.9,0.45,TRUE,OK,10.25,99.79,0.625,Warning,Moisture detected
+9/3/2025 9:23,CH6,CELL5,Handshake,387.85,3.781,392.16,52.47,54.88,96.36,47.18,44.57,45.875,25.19,5.82,88.02,14.65,FALSE,OK,20.35,106.89,0.961,Runaway,Critical thermal runaway risk
+9/3/2025 9:24,CH2,CELL30,Parameter_Config,373.93,4.119,377.21,78.54,76,40.71,58.1,57.6,57.85,23.39,14.57,92.33,47.73,TRUE,OK,29.37,97.33,0.813,Alarm,High internal resistance; Moisture detected
+9/3/2025 9:25,CH6,CELL48,End_Of_Charge,386.72,3.721,386.97,12.82,8.26,62.39,69.15,66.49,67.82,25.49,6.28,84.36,20.04,FALSE,OK,4.96,118.16,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 9:26,CH10,CELL17,End_Of_Charge,328.83,3.692,326.73,21.64,24.8,29.35,35.95,33.07,34.51,34.99,7.63,88.48,29.52,TRUE,Critical,7.12,113.42,0.504,Warning,Moisture detected
+9/3/2025 9:27,CH3,CELL4,End_Of_Charge,392.95,4.142,397.64,62.42,61.61,40.16,25.09,21.24,23.165,24.19,1.51,90.17,2.92,TRUE,OK,24.53,111.21,0.418,Warning,Moisture detected
+9/3/2025 9:28,CH6,CELL41,Parameter_Config,379.76,3.805,379.83,49.3,51.07,91.57,78.72,74.68,76.7,30.96,4.14,84.87,39.11,TRUE,Warning,18.72,95.37,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 9:29,CH3,CELL43,Recharge,381.81,4.072,378.58,116.89,120.86,83.44,35.46,32.08,33.77,29.73,13.89,99.59,11.01,FALSE,OK,44.63,100.68,0.723,Alarm,High internal resistance
+9/3/2025 9:30,CH3,CELL20,Recharge,300.07,3.687,297.14,34.23,35.88,54.21,42.96,42.33,42.645,27.52,9.62,97.87,45.78,FALSE,Critical,10.27,102.96,0.72,Alarm,Normal operation
+9/3/2025 9:31,CH5,CELL30,End_Of_Charge,397.41,3.827,400.63,6.3,3.64,36.1,47.83,46.59,47.21,28.86,6.31,92.87,49.87,FALSE,OK,2.5,97.25,0.678,Warning,Normal operation
+9/3/2025 9:32,CH6,CELL50,Recharge,385.65,3.787,385.65,62.47,65.04,70.41,63.86,62.41,63.135,23.7,8.74,93.9,11.59,FALSE,OK,24.09,117.53,0.975,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 9:33,CH4,CELL40,Handshake,305.86,4.014,305.01,63.69,68.31,51.81,50.25,46.96,48.605,26.21,6.25,84.52,48.84,TRUE,OK,19.48,98.66,0.732,Alarm,Moisture detected
+9/3/2025 9:34,CH8,CELL17,Recharge,364.84,3.683,367.36,48.76,48.31,28.66,51.17,50.64,50.905,27.2,10.55,83.62,43.2,FALSE,Critical,17.79,100.82,0.661,Warning,Normal operation
+9/3/2025 9:35,CH2,CELL21,End_Of_Charge,309.18,3.847,309.35,62.58,65.95,15.37,72.81,70.32,71.565,29.78,13.5,81.75,10.31,FALSE,Critical,19.35,102.09,0.823,Alarm,Rapid temp rise; High internal resistance
+9/3/2025 9:36,CH9,CELL11,Parameter_Config,301.83,3.988,300.68,79.36,82.55,39.14,78.42,73.9,76.16,32.99,4.96,91.4,25.94,TRUE,Warning,23.95,94.66,0.966,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 9:37,CH8,CELL2,End_Of_Charge,358.94,4.149,355.81,113.95,117.47,12.23,74.01,69.51,71.76,23.03,3.35,88.34,1.99,TRUE,Warning,40.9,103,0.797,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 9:38,CH3,CELL37,Recharge,391.3,3.75,390.9,17.74,20.31,91.19,71.43,68.15,69.79,31.21,14.03,97.46,25.44,TRUE,OK,6.94,92.95,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 9:39,CH2,CELL35,Parameter_Config,376.33,3.954,372.89,113.79,113.64,99.25,39.5,37.04,38.27,27.25,13.32,92.4,25.79,TRUE,OK,42.82,98.29,0.893,Alarm,High internal resistance; Moisture detected
+9/3/2025 9:40,CH9,CELL39,Parameter_Config,380.68,3.867,381.26,38.98,41.27,89.98,41.3,40.5,40.9,24.88,1.39,82.62,21.24,TRUE,OK,14.84,116.98,0.829,Alarm,Moisture detected
+9/3/2025 9:41,CH1,CELL23,End_Of_Charge,330.04,4.081,328.08,72.54,70.95,51.66,40.03,38.33,39.18,25.65,5.18,83.86,35.83,TRUE,OK,23.94,92.64,0.667,Warning,Moisture detected
+9/3/2025 9:42,CH9,CELL9,Handshake,318.17,3.793,314.57,52.38,53.56,82.54,69.41,67.8,68.605,21.86,2.15,84.47,37.42,FALSE,OK,16.67,110.89,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 9:43,CH8,CELL3,Parameter_Config,305.89,4.021,309.97,39.59,42.12,34.03,65.2,62.79,63.995,23.08,7.89,92.42,29.65,TRUE,OK,12.11,94.09,0.812,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 9:44,CH2,CELL10,End_Of_Charge,326.97,4.065,326.52,6.26,8.86,51.79,76.29,72.1,74.195,22.63,14.27,94.11,36.58,TRUE,OK,2.05,118.28,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 9:45,CH7,CELL4,End_Of_Charge,326.6,3.905,322.11,69.36,64.93,91.15,75.58,72.13,73.855,34.46,5.14,95.93,1.33,TRUE,OK,22.65,119.83,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 9:46,CH10,CELL27,Recharge,361.46,3.853,364.35,59.14,59.52,75.28,36.62,34.93,35.775,22.74,4.88,93.32,0.99,TRUE,Warning,21.38,94.56,0.738,Alarm,Moisture detected
+9/3/2025 9:47,CH5,CELL22,Parameter_Config,356.28,3.784,354.03,14.53,11.08,64.58,71.4,70.95,71.175,24.85,10.37,81.21,0.41,FALSE,OK,5.18,110.34,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 9:48,CH7,CELL45,End_Of_Charge,352.69,3.892,355.46,19.37,17.36,76.32,78.34,73.41,75.875,25.08,6.01,80.55,30.02,TRUE,OK,6.83,103.4,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 9:49,CH10,CELL22,Recharge,301.35,4.036,305.99,90.17,92.78,66.97,66.6,62.99,64.795,25.15,5.68,94.96,11.08,TRUE,OK,27.17,99.68,0.987,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 9:50,CH4,CELL44,Handshake,349.05,3.921,348.13,63.09,60.95,98.57,29.11,24.14,26.625,23.18,7.28,99.69,37.8,FALSE,OK,22.02,93.34,0.783,Alarm,Normal operation
+9/3/2025 9:51,CH6,CELL42,End_Of_Charge,366.63,3.79,368.9,106.14,106.71,32.37,40.36,36.14,38.25,29.04,12.48,92.74,26.69,TRUE,OK,38.91,106.66,0.57,Warning,High internal resistance; Moisture detected
+9/3/2025 9:52,CH7,CELL30,Handshake,313.95,3.676,317.42,1.66,-3.32,14.25,74.56,73.97,74.265,26.3,9.22,81.89,11.19,TRUE,Warning,0.52,100.46,0.831,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 9:53,CH10,CELL13,End_Of_Charge,304.98,4.129,300.25,90.29,89.8,0.12,59.81,58.21,59.01,28.09,11.06,83.78,18.88,FALSE,Warning,27.54,113.74,0.607,Warning,Normal operation
+9/3/2025 9:54,CH4,CELL16,End_Of_Charge,359.97,3.612,355.81,15.62,15.16,15.88,28.56,23.72,26.14,21.27,7.19,96.14,30.01,TRUE,Warning,5.62,100.66,0.345,Watch,Moisture detected
+9/3/2025 9:55,CH9,CELL17,Recharge,307.34,3.687,304.4,95.51,96.97,20.61,53.42,49.59,51.505,21.86,1.2,97.1,16.28,TRUE,OK,29.35,116.89,0.635,Warning,Moisture detected
+9/3/2025 9:56,CH6,CELL36,Recharge,310.91,3.838,309.26,84.13,87.15,99.93,58.48,55.06,56.77,20.61,7.56,93.97,8.16,FALSE,OK,26.16,116.29,1,Runaway,Critical thermal runaway risk
+9/3/2025 9:57,CH3,CELL24,End_Of_Charge,357.83,3.709,354.32,23.53,24.98,22.97,35.7,31.26,33.48,27.64,14.79,89.61,43.12,FALSE,Warning,8.42,110.08,0.473,Warning,High internal resistance
+9/3/2025 9:58,CH2,CELL1,Parameter_Config,312.54,4.175,312.89,36.16,39.81,11.12,62.34,61.15,61.745,22.73,14.82,95.75,13.23,TRUE,OK,11.3,111.31,0.658,Warning,Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 9:59,CH8,CELL21,Recharge,367.76,3.994,365.32,90.09,93.6,95.17,33.77,31.43,32.6,23.08,13.65,93.05,1.19,TRUE,OK,33.13,105.1,0.818,Alarm,High internal resistance; Moisture detected
+9/3/2025 10:00,CH9,CELL7,Parameter_Config,314.72,4.18,314.84,16.28,16.79,92.1,41.21,38.84,40.025,24.1,8.58,87.43,44.11,FALSE,OK,5.12,96.03,0.842,Alarm,Normal operation
+9/3/2025 10:01,CH3,CELL48,End_Of_Charge,329.66,4.096,329.49,88.67,93.22,71.14,55.67,52.04,53.855,24.57,1.64,99.58,36.58,FALSE,OK,29.23,100.48,0.897,Alarm,Normal operation
+9/3/2025 10:02,CH1,CELL31,Handshake,336.65,4.009,340.82,51.14,47.91,44.49,40.6,40.24,40.42,26.27,1.48,89.51,42.41,TRUE,OK,17.22,91.13,0.67,Warning,Moisture detected
+9/3/2025 10:03,CH6,CELL9,Recharge,345.42,3.795,346.79,66.38,65.75,5.52,50.21,47,48.605,27.67,7.6,94.96,36.86,TRUE,Critical,22.93,102.67,0.531,Warning,Moisture detected
+9/3/2025 10:04,CH9,CELL19,End_Of_Charge,370.4,3.609,368.31,76.2,77.93,87.54,64.77,59.87,62.32,27.88,11.1,91.69,12.15,FALSE,OK,28.22,110.61,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 10:05,CH6,CELL27,Recharge,300.73,4.075,301.16,0.77,-0.2,6.27,43.81,42.28,43.045,29.85,12.58,88.73,1.71,TRUE,OK,0.23,113.59,0.468,Warning,High internal resistance; Moisture detected
+9/3/2025 10:06,CH7,CELL21,Handshake,322.07,3.775,318.93,40.24,43.64,27.21,45.14,42.49,43.815,29.56,1.57,82.51,17.1,FALSE,OK,12.96,94.35,0.592,Warning,Normal operation
+9/3/2025 10:07,CH7,CELL30,Handshake,309.42,3.987,305.23,22.78,25.2,10.93,69.21,67.48,68.345,34.75,14.55,83.12,31.7,TRUE,OK,7.05,93.47,0.748,Alarm,Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 10:08,CH8,CELL12,Parameter_Config,367.75,3.971,365.89,23.1,19.6,48.04,65.08,61,63.04,26.47,6.19,80.99,24.56,TRUE,OK,8.5,109.66,0.888,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 10:09,CH9,CELL45,Recharge,348.5,4.062,347.86,97.66,100.58,84.77,40.4,36.78,38.59,29.72,12.45,99.66,48.62,FALSE,OK,34.03,112.44,0.851,Alarm,High internal resistance
+9/3/2025 10:10,CH10,CELL40,Recharge,336.2,4.062,336.47,0.96,-3.17,17.27,61.73,59.41,60.57,29.95,11.36,88.71,42.46,TRUE,OK,0.32,114.16,0.741,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 10:11,CH4,CELL24,Handshake,338.04,3.689,336.85,110.5,106.12,72.73,59.2,57.45,58.325,32.82,8.76,84.78,25.49,TRUE,Warning,37.35,115.89,0.964,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 10:12,CH7,CELL46,Parameter_Config,363.17,4.049,364.5,111.36,110.52,18.18,31.29,30.79,31.04,24.1,14.8,92.53,29.86,TRUE,OK,40.44,118.59,0.417,Warning,High internal resistance; Moisture detected
+9/3/2025 10:13,CH5,CELL9,Handshake,370,3.666,368.45,59.21,61,82.1,77.99,75.19,76.59,20.03,5.62,86.43,19.67,TRUE,Critical,21.91,106.92,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 10:14,CH10,CELL5,Handshake,321.01,3.674,317.67,57.77,57.65,4.94,29.83,25.67,27.75,28.48,1.76,81.12,21.39,FALSE,OK,18.54,92.15,0.349,Watch,Normal operation
+9/3/2025 10:15,CH4,CELL4,Recharge,308.72,3.697,307.49,77.2,78.48,22.61,25.54,22.03,23.785,28.85,11.99,99.66,48.78,TRUE,Critical,23.83,114.11,0.375,Watch,Moisture detected
+9/3/2025 10:16,CH5,CELL22,Parameter_Config,387.85,4.029,384.79,48.65,44.72,19.05,70.5,69.12,69.81,30.61,9.68,90.55,45.59,FALSE,OK,18.87,116.05,0.806,Alarm,Rapid temp rise
+9/3/2025 10:17,CH7,CELL46,Handshake,360.27,3.724,358.36,119.19,121.05,97.02,49.15,48.09,48.62,34.59,3.38,91.25,18.83,FALSE,OK,42.94,92.67,0.954,Runaway,Critical thermal runaway risk
+9/3/2025 10:18,CH1,CELL41,Handshake,392.81,3.643,388.02,49.67,44.91,53.97,65.55,61.44,63.495,28.5,12.93,84.65,33.86,FALSE,OK,19.51,111.62,0.941,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 10:19,CH4,CELL35,Handshake,316.45,3.618,319.87,92.08,90.1,26.74,25.73,25.32,25.525,24.68,6.26,82.95,3.63,TRUE,OK,29.14,110.2,0.391,Watch,Moisture detected
+9/3/2025 10:20,CH9,CELL46,Parameter_Config,358.64,3.873,355.67,20.52,23.13,57.52,51.76,46.9,49.33,20.77,3.2,96.73,16.04,FALSE,Critical,7.36,107.63,0.794,Alarm,Normal operation
+9/3/2025 10:21,CH2,CELL22,Recharge,363.34,4.111,364.46,58.74,61.32,39.62,47.87,45.14,46.505,32.2,6.6,95.19,12.76,TRUE,OK,21.34,115.56,0.686,Warning,Moisture detected
+9/3/2025 10:22,CH8,CELL11,Handshake,373.33,3.802,372.11,105.71,101.05,12.07,79.34,78.27,78.805,27.01,6.89,89.17,36.13,FALSE,OK,39.46,90.24,0.836,Alarm,Rapid temp rise
+9/3/2025 10:23,CH5,CELL30,Recharge,373.61,3.784,371.41,44.49,44.12,27.25,40.12,36.81,38.465,29.14,8.67,81.28,17.21,FALSE,OK,16.62,110.63,0.506,Warning,Normal operation
+9/3/2025 10:24,CH3,CELL22,End_Of_Charge,323.22,4.188,325.12,78.78,81.31,91.92,56.67,53.53,55.1,27.62,4.76,96.28,48.26,FALSE,Warning,25.46,105.09,1,Runaway,Critical thermal runaway risk
+9/3/2025 10:25,CH10,CELL43,Parameter_Config,332.15,4.103,332.42,42.46,45.41,99.55,43.27,43.26,43.265,33.95,12.29,80.54,4.47,TRUE,OK,14.1,111.64,0.924,Runaway,Critical thermal runaway risk; High internal resistance; Moisture detected
+9/3/2025 10:26,CH4,CELL4,Recharge,387.44,4.128,384.07,62.68,62.85,23.43,29.36,25.11,27.235,34.74,10.01,82.26,14.71,TRUE,OK,24.28,91.49,0.422,Warning,Moisture detected
+9/3/2025 10:27,CH2,CELL11,Parameter_Config,356.47,4.032,356.32,38.16,37.93,19.22,36.61,36.34,36.475,28.31,3.52,95.94,10.39,TRUE,Critical,13.6,103.26,0.464,Warning,Moisture detected
+9/3/2025 10:28,CH9,CELL9,Parameter_Config,346.32,3.9,342.23,102.45,98.41,70.58,41.71,39.6,40.655,30.2,7.59,87.85,44.16,FALSE,OK,35.48,100.32,0.785,Alarm,Normal operation
+9/3/2025 10:29,CH8,CELL37,Recharge,304.03,4.007,299.04,118.2,114.69,38.86,72.35,71.25,71.8,24.68,8.78,97.98,35.85,FALSE,OK,35.94,102.23,0.885,Alarm,Rapid temp rise
+9/3/2025 10:30,CH5,CELL2,Recharge,314.82,3.737,314.82,33.61,35.3,34.51,74.23,69.65,71.94,23.42,4.69,85.7,9.78,FALSE,Critical,10.58,97.71,0.898,Alarm,Rapid temp rise
+9/3/2025 10:31,CH3,CELL49,Parameter_Config,341.42,3.76,336.96,92.96,96,70.28,53.77,50.66,52.215,24.47,3.99,99.92,49.41,FALSE,OK,31.74,93.64,0.894,Alarm,Normal operation
+9/3/2025 10:32,CH1,CELL24,Handshake,320.9,4.176,317.05,73.74,76.83,75.5,49.3,44.76,47.03,23.4,8.57,80.87,2.95,TRUE,OK,23.66,95.65,0.867,Alarm,Moisture detected
+9/3/2025 10:33,CH4,CELL14,Recharge,304.01,3.632,301.28,99.79,97.45,73.73,63.57,59.42,61.495,22.45,10.51,91.52,7.03,TRUE,OK,30.34,115.97,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 10:34,CH4,CELL27,Handshake,311.18,3.818,314.34,116.12,115.57,5.41,50.83,47.51,49.17,28.82,3.48,99.21,35.55,FALSE,OK,36.13,104.22,0.519,Warning,Normal operation
+9/3/2025 10:35,CH7,CELL6,Recharge,314.57,3.909,314.96,41.16,37.65,84.93,46.05,45.86,45.955,29.43,14.4,82.9,9.11,FALSE,OK,12.95,106.53,0.867,Alarm,High internal resistance
+9/3/2025 10:36,CH6,CELL20,Parameter_Config,316.21,3.99,318.72,112.9,117.21,78.29,71.03,67.09,69.06,23.81,9.08,92.77,36.49,TRUE,OK,35.7,99.79,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 10:37,CH6,CELL37,Handshake,388.75,3.62,391.89,31.66,30.13,3.6,28.79,27.11,27.95,32.58,3.51,81.61,21.52,TRUE,Warning,12.31,104.39,0.261,Watch,Moisture detected
+9/3/2025 10:38,CH6,CELL9,Handshake,330.71,3.795,334.28,68.31,65.92,81.31,71.76,71.23,71.495,31.45,7.45,83.71,48.69,FALSE,OK,22.59,116.54,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 10:39,CH2,CELL42,End_Of_Charge,301.83,3.867,306.02,28.6,24.88,85.05,63.26,61.8,62.53,22.15,10.23,95.9,26.03,FALSE,OK,8.63,114.28,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 10:40,CH1,CELL46,End_Of_Charge,344.45,4.176,347.21,55.12,55.59,51.57,40.36,39.36,39.86,31.08,10.67,84.47,10,FALSE,OK,18.99,93.34,0.633,Warning,Normal operation
+9/3/2025 10:41,CH6,CELL41,Handshake,357.84,3.996,361.06,108.43,104.99,70.76,31.05,30.88,30.965,30.08,13.55,98.39,48.03,TRUE,OK,38.8,100.52,0.677,Warning,High internal resistance; Moisture detected
+9/3/2025 10:42,CH2,CELL12,Parameter_Config,368.03,4.133,371.86,40.84,40.35,46.03,74.05,73.57,73.81,30.78,7.23,95.37,34.24,TRUE,OK,15.03,119.77,0.95,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 10:43,CH4,CELL43,Parameter_Config,346.79,3.992,341.91,30.04,34.91,92.75,65.01,60.79,62.9,28.82,6.26,92.96,36.8,FALSE,Critical,10.42,91.31,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 10:44,CH7,CELL12,End_Of_Charge,342.52,3.802,344.37,65.97,69.98,79.24,52.72,50.08,51.4,22.44,5,81.16,31.12,FALSE,OK,22.6,102.8,0.875,Alarm,Normal operation
+9/3/2025 10:45,CH5,CELL35,Parameter_Config,363.3,3.726,358.43,51.92,49.27,7.96,60.46,55.79,58.125,20.24,5.27,85.81,26.01,FALSE,OK,18.86,119.44,0.63,Warning,Rapid temp rise
+9/3/2025 10:46,CH4,CELL41,Recharge,323.94,3.66,325.95,18.55,19.56,54.8,37.49,35.58,36.535,28.67,4.79,99.12,41.71,FALSE,Warning,6.01,104.86,0.662,Warning,Normal operation
+9/3/2025 10:47,CH9,CELL32,Recharge,378.42,3.949,375.72,46.95,50.78,72.93,72.28,70.28,71.28,30.71,4.5,93.33,18.11,FALSE,OK,17.77,102,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 10:48,CH5,CELL31,Recharge,326.58,4.012,329.24,110.58,114.82,21.91,72.93,69.47,71.2,24.5,12.79,97.22,8.01,TRUE,OK,36.11,107.59,0.842,Alarm,Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 10:49,CH4,CELL45,End_Of_Charge,351.92,4.195,353.48,12.83,12.52,26.35,78.12,76.94,77.53,24.08,12.8,86.77,29.2,TRUE,OK,4.52,115.15,0.931,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 10:50,CH10,CELL2,Recharge,325.92,4.088,326.45,82.35,84.99,10.28,46.4,45.89,46.145,25.61,3.18,84.1,36.05,TRUE,OK,26.84,106.13,0.521,Warning,Moisture detected
+9/3/2025 10:51,CH10,CELL46,Recharge,392.88,4.018,389.35,47.73,49.2,4.61,46.56,44.55,45.555,27.21,8.84,81.22,28.11,FALSE,OK,18.75,107.13,0.496,Warning,Normal operation
+9/3/2025 10:52,CH10,CELL36,Parameter_Config,377.65,3.901,373.01,23.52,28.27,73.05,65.94,62.92,64.43,34.86,9.67,99.2,12.97,TRUE,OK,8.88,117.28,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 10:53,CH7,CELL2,Parameter_Config,331.67,3.894,331.15,12.88,8.67,80.97,60.7,56.27,58.485,23.72,14.03,99.85,32.26,FALSE,OK,4.27,100.38,0.994,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 10:54,CH6,CELL17,Recharge,354.43,3.97,354.16,38.48,34.11,94.06,28.44,23.99,26.215,28.05,7.61,92.02,47.1,TRUE,OK,13.64,108.26,0.738,Alarm,Moisture detected
+9/3/2025 10:55,CH6,CELL23,Parameter_Config,301.87,3.77,300.77,47.02,45.68,27.95,79.48,75.34,77.41,28.92,10.03,83.01,15,TRUE,OK,14.19,110.13,0.884,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 10:56,CH7,CELL3,Recharge,305.12,3.695,304.08,17.49,12.77,54.03,29.61,28.72,29.165,34.1,14.54,94.8,1.99,FALSE,OK,5.34,107.78,0.59,Warning,High internal resistance
+9/3/2025 10:57,CH1,CELL5,Recharge,335.58,4.194,336.31,103.83,103.37,34.26,62.55,60.44,61.495,32.1,3.88,90.28,40.1,TRUE,OK,34.84,96.69,0.827,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 10:58,CH10,CELL39,End_Of_Charge,306.52,3.925,305.61,83.63,85.4,52.53,75.86,72.47,74.165,26.83,12.1,80.51,19.65,FALSE,Warning,25.63,94.9,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 10:59,CH4,CELL21,Parameter_Config,354.74,4.067,358.5,70.02,68.82,57.6,54.25,52.28,53.265,31.34,10.23,99.68,15.61,FALSE,Warning,24.84,119.28,0.838,Alarm,Normal operation
+9/3/2025 11:00,CH6,CELL29,Parameter_Config,316.91,3.889,315.23,108.25,104.59,41.28,38.94,37.69,38.315,22.05,2.35,95.21,27.01,TRUE,OK,34.31,95.52,0.59,Warning,Moisture detected
+9/3/2025 11:01,CH3,CELL18,Parameter_Config,349.93,3.682,351.77,24.47,27.51,77.82,78.82,78.4,78.61,32.71,11.54,97.47,27.93,FALSE,Critical,8.56,109.4,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 11:02,CH9,CELL4,Recharge,327.22,4.058,330.77,71.14,69.75,11.58,67.71,65.57,66.64,27.68,5.98,91.43,40.51,TRUE,OK,23.28,115.19,0.758,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 11:03,CH3,CELL37,End_Of_Charge,392.96,3.921,396.97,56.03,54.19,47.38,68.26,65.36,66.81,26.08,7.29,97.65,8.01,TRUE,OK,22.02,94.05,0.911,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 11:04,CH5,CELL17,Handshake,330.03,3.832,334.46,71.07,71.49,66.71,79.37,79.37,79.37,33.98,10.43,92.13,25,TRUE,OK,23.46,119.59,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 11:05,CH7,CELL24,Handshake,395.48,3.778,391.02,38.1,34.02,54.53,64.03,62.81,63.42,21.57,7.26,87.44,29.95,FALSE,Warning,15.07,110.68,0.887,Alarm,Rapid temp rise
+9/3/2025 11:06,CH9,CELL28,Handshake,369.73,3.686,368.95,107.38,103.02,88.35,46.32,44.54,45.43,20.38,2.51,85.39,37.8,TRUE,OK,39.7,98.24,0.92,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 11:07,CH2,CELL13,Handshake,313.14,3.614,313.47,3.92,2.61,22.86,58.92,54.64,56.78,21.61,14.57,88.15,48.17,TRUE,OK,1.23,118.94,0.739,Alarm,High internal resistance; Moisture detected
+9/3/2025 11:08,CH1,CELL2,Parameter_Config,304.1,4.134,299.63,28.48,31.65,80.56,66.45,64.58,65.515,26.49,8.06,95.67,42.08,TRUE,OK,8.66,119.45,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 11:09,CH9,CELL32,Handshake,355.74,3.78,357.07,111.11,113.65,97.29,60.6,60.59,60.595,20.06,1.65,97.8,3.81,FALSE,OK,39.53,113.78,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 11:10,CH6,CELL50,Recharge,321.17,4.046,318.42,28.09,27.15,27.6,79.22,76.14,77.68,29.2,8.49,84.63,26.54,FALSE,Warning,9.02,96.22,0.924,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 11:11,CH4,CELL41,Handshake,306.28,4.187,303.43,12.27,10.96,78.44,53.74,52.78,53.26,23.19,2.45,83.61,1.56,TRUE,OK,3.76,114.79,0.943,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 11:12,CH8,CELL30,Handshake,364.53,4.143,364.49,38.38,38.77,51.82,47.65,47.32,47.485,27.16,1.36,91.05,16.55,TRUE,OK,13.99,96.11,0.726,Alarm,Moisture detected
+9/3/2025 11:13,CH5,CELL48,Handshake,387.67,3.702,389.86,78.29,82.2,11.39,32.4,31.72,32.06,32.83,6.94,91.26,1.24,FALSE,OK,30.35,91.74,0.367,Watch,Normal operation
+9/3/2025 11:14,CH10,CELL30,Handshake,345.61,4.091,343.87,43.46,41.25,8.87,45.32,42.49,43.905,24.44,12.01,96.16,31.56,TRUE,OK,15.02,109.43,0.499,Warning,High internal resistance; Moisture detected
+9/3/2025 11:15,CH5,CELL24,Handshake,352.94,4.128,352.98,59.11,58.42,2.04,54.61,51.91,53.26,21.98,1.29,85.29,31.9,TRUE,OK,20.86,93.24,0.538,Warning,Moisture detected
+9/3/2025 11:16,CH8,CELL28,Parameter_Config,394.65,3.791,390.86,35.08,33.11,98.85,68.87,67.33,68.1,33.93,4.53,91.71,10.93,TRUE,OK,13.84,116.33,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 11:17,CH6,CELL27,Parameter_Config,329.86,3.754,326.24,95.23,90.51,41.31,56.31,51.94,54.125,23.85,1.62,95.72,26.14,FALSE,Warning,31.41,115.95,0.755,Alarm,Normal operation
+9/3/2025 11:18,CH9,CELL6,Handshake,314.8,3.803,319.76,43.14,46.73,52.93,43.96,42.46,43.21,32.74,7.34,86.22,11.65,FALSE,OK,13.58,114.81,0.74,Alarm,Normal operation
+9/3/2025 11:19,CH8,CELL45,Handshake,306.04,3.925,309.97,8.66,7.92,32.38,55.7,55.12,55.41,32.04,1.24,82.52,8.31,TRUE,OK,2.65,119.14,0.713,Alarm,Moisture detected
+9/3/2025 11:20,CH7,CELL23,Handshake,323,3.906,324.74,13.21,10.43,38.65,79.15,78.69,78.92,33.87,14.14,99.68,37.04,TRUE,Warning,4.27,101.72,0.983,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 11:21,CH8,CELL38,Parameter_Config,365.14,3.872,360.33,85.03,86.13,75.93,52.25,49.96,51.105,20.72,2.34,89.93,34.03,FALSE,OK,31.05,97.38,0.885,Alarm,Normal operation
+9/3/2025 11:22,CH3,CELL34,End_Of_Charge,384.6,3.97,387.14,103.77,100,88.22,50.1,49.21,49.655,25.5,9.47,91.78,12.35,TRUE,Warning,39.91,105.82,0.947,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 11:23,CH10,CELL10,Handshake,380.28,3.69,380.27,47.78,51.1,92.27,47.48,47.38,47.43,29.95,3.04,91.03,2.83,TRUE,OK,18.17,92.03,0.932,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 11:24,CH4,CELL5,Recharge,356.85,3.904,359.29,13.88,13.66,5.05,55.44,54.5,54.97,22.56,14.47,94.25,48.79,TRUE,Critical,4.95,92.76,0.597,Warning,High internal resistance; Moisture detected
+9/3/2025 11:25,CH6,CELL35,End_Of_Charge,303.76,3.788,305.97,4.67,6.04,7.29,35.04,34,34.52,31.74,14.21,82.36,17.22,TRUE,OK,1.42,102.45,0.377,Watch,High internal resistance; Moisture detected
+9/3/2025 11:26,CH6,CELL8,Handshake,370.02,3.888,369.97,38.33,35.58,95.61,64.32,59.48,61.9,21.26,13.9,89.61,23.53,FALSE,OK,14.18,106.69,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 11:27,CH4,CELL21,Recharge,309.05,3.717,308.83,26.76,27.98,50.57,35.1,33.85,34.475,26.87,4.49,84.27,3.11,TRUE,OK,8.27,118.19,0.589,Warning,Moisture detected
+9/3/2025 11:28,CH2,CELL26,End_Of_Charge,372.17,3.634,373.73,6.6,10.15,49.02,35.3,31.92,33.61,32.1,6.96,90.57,33.52,TRUE,OK,2.46,98.64,0.559,Warning,Moisture detected
+9/3/2025 11:29,CH8,CELL22,Handshake,317.85,3.816,319.76,81.3,79.58,23.73,61.01,59.17,60.09,33.02,12.78,90.89,3.76,FALSE,OK,25.84,93.56,0.74,Alarm,Rapid temp rise; High internal resistance
+9/3/2025 11:30,CH1,CELL16,Parameter_Config,329.64,3.876,331.99,18.71,18.96,32.06,67,62.53,64.765,28.97,6.13,91.29,43.88,TRUE,OK,6.17,117.7,0.857,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 11:31,CH1,CELL11,End_Of_Charge,321.76,4.104,323.49,23.41,23.24,15.71,49.43,49.25,49.34,31.68,1.28,87.27,14.35,TRUE,OK,7.53,96.64,0.58,Warning,Moisture detected
+9/3/2025 11:32,CH10,CELL31,Recharge,374.7,4.096,376.56,60.8,60.33,48.77,69.08,65.91,67.495,22.93,7.84,92.9,25.31,FALSE,Critical,22.78,112.15,0.94,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 11:33,CH8,CELL48,End_Of_Charge,394.19,3.712,399.08,69.84,74.05,48.62,75.58,72.96,74.27,32.65,6.66,86.14,10.98,TRUE,OK,27.53,107.07,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 11:34,CH8,CELL35,End_Of_Charge,334.53,4.076,332.6,100.48,95.75,12.35,28.31,28.14,28.225,31.49,7.46,80.3,12.14,TRUE,OK,33.61,104.55,0.311,Watch,Moisture detected
+9/3/2025 11:35,CH6,CELL35,Recharge,339.26,3.911,339.17,94.19,92.12,63.35,29.06,26.9,27.98,20.39,1.27,90.76,20.22,FALSE,Critical,31.95,115.73,0.574,Warning,Normal operation
+9/3/2025 11:36,CH6,CELL31,Parameter_Config,330.63,3.745,329.27,8.43,12.9,7.96,39.09,38.32,38.705,25.2,1.92,87.8,7.58,FALSE,OK,2.79,97.1,0.469,Warning,Normal operation
+9/3/2025 11:37,CH6,CELL29,Recharge,318.45,3.699,319.64,39.37,43.56,71.7,27.92,25.82,26.87,20.73,10.05,97.93,10.21,TRUE,OK,12.54,111.47,0.611,Warning,Moisture detected
+9/3/2025 11:38,CH2,CELL16,Recharge,398.32,3.699,400.23,26.06,30.65,66.36,26.63,21.68,24.155,29.93,10.9,94.38,35.43,TRUE,Warning,10.38,104.03,0.612,Warning,Moisture detected
+9/3/2025 11:39,CH8,CELL44,Parameter_Config,346.84,3.749,349.74,25.66,26.15,98.61,76.38,76.27,76.325,21.28,11.27,88.46,38.26,FALSE,OK,8.9,119.64,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 11:40,CH9,CELL35,Handshake,372.06,3.64,376.68,22.58,26.79,32.27,78.13,75.87,77,25,8.85,84.01,2.1,FALSE,Warning,8.4,96.98,0.934,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 11:41,CH10,CELL25,End_Of_Charge,371.5,3.796,372.21,41.82,43.55,79.22,36.51,32.3,34.405,34.41,2.65,95,9.15,TRUE,Critical,15.54,111.2,0.748,Alarm,Moisture detected
+9/3/2025 11:42,CH6,CELL12,Recharge,342.53,3.754,338.46,39.66,37.34,6.76,77.16,74.58,75.87,23.08,4.99,97.38,17.24,FALSE,OK,13.58,104.61,0.824,Alarm,Rapid temp rise
+9/3/2025 11:43,CH8,CELL28,Recharge,370.75,4.032,372.58,70.51,67.03,41.17,44.83,42.66,43.745,27.16,14.05,83.3,40.67,FALSE,OK,26.14,113.65,0.637,Warning,High internal resistance
+9/3/2025 11:44,CH7,CELL20,Parameter_Config,359.2,3.801,363.73,60.84,63.41,3.32,25.97,21.64,23.805,30.24,4.77,82.5,17.65,TRUE,OK,21.85,114.96,0.302,Watch,Moisture detected
+9/3/2025 11:45,CH3,CELL11,Handshake,304.82,3.786,306.54,8.55,8.81,23.55,56.22,53.97,55.095,30.08,10.4,96.62,0.81,FALSE,Warning,2.61,104.06,0.689,Warning,Normal operation
+9/3/2025 11:46,CH5,CELL42,Handshake,395.14,3.943,396.47,103.97,103.88,57.93,75.8,75,75.4,20.84,7.07,83.4,48.84,FALSE,OK,41.08,93.49,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 11:47,CH3,CELL28,Recharge,368.97,4.162,373.14,45.5,41.81,97.02,51,47.39,49.195,29.92,4.26,88.49,26.22,FALSE,OK,16.79,110.14,0.994,Runaway,Critical thermal runaway risk
+9/3/2025 11:48,CH8,CELL8,Handshake,334.59,3.656,330.44,115.77,115.39,33.8,34.55,32.53,33.54,31.82,2.75,91.46,32.96,TRUE,Critical,38.74,92.24,0.517,Warning,Moisture detected
+9/3/2025 11:49,CH9,CELL2,Handshake,361.63,3.838,360.05,18.86,19.88,67.36,38.33,36.96,37.645,26.21,14.28,93.14,37.08,TRUE,Warning,6.82,118.71,0.733,Alarm,High internal resistance; Moisture detected
+9/3/2025 11:50,CH1,CELL32,Handshake,379.13,3.954,382.24,1.29,1.36,9.07,58.99,55.89,57.44,27.16,2.53,81.74,39.09,FALSE,OK,0.49,116.11,0.641,Warning,Normal operation
+9/3/2025 11:51,CH6,CELL33,Parameter_Config,358.33,3.87,354.2,48.58,45.87,15.32,41.73,37.87,39.8,32.09,5.91,89.84,31.3,TRUE,OK,17.41,107.57,0.514,Warning,Moisture detected
+9/3/2025 11:52,CH10,CELL27,Recharge,397.13,4.199,397.04,101.95,102.62,76.94,78.34,75.9,77.12,26.26,8.66,85.85,48.88,FALSE,OK,40.49,114.74,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 11:53,CH4,CELL1,End_Of_Charge,377.68,3.723,375.21,109.42,113.61,55.79,72.85,69.22,71.035,22.3,3.72,84.61,10.24,TRUE,Warning,41.33,107.41,0.996,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 11:54,CH6,CELL29,Handshake,355.38,4.074,352.36,73.09,74.32,64.06,30.54,28.62,29.58,29.28,3.22,98.26,2.84,TRUE,Warning,25.97,98.47,0.656,Warning,Moisture detected
+9/3/2025 11:55,CH9,CELL7,Recharge,338.6,4.165,337.97,116.81,121.19,63.24,62.73,60.01,61.37,23.04,7.65,90.11,49.97,TRUE,OK,39.55,108.02,0.923,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 11:56,CH2,CELL42,Handshake,332.21,4.01,335.75,68.93,65.17,47.26,48.78,44.69,46.735,33.51,7.92,83.64,6.15,TRUE,Warning,22.9,107.39,0.71,Alarm,Moisture detected
+9/3/2025 11:57,CH6,CELL18,Parameter_Config,334.23,3.637,337.84,19.17,18.28,27.12,52.26,50.99,51.625,29.56,11.11,81.45,30.17,FALSE,OK,6.41,119.19,0.66,Warning,Normal operation
+9/3/2025 11:58,CH6,CELL23,Parameter_Config,389.61,4.197,391.98,113.68,118.44,33.81,74.72,74.51,74.615,26.93,2.12,81.68,40.02,FALSE,OK,44.29,97.37,0.925,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 11:59,CH10,CELL4,Parameter_Config,307.61,4.17,305.56,62.86,67.49,50.09,54.85,51.38,53.115,32.16,6.59,94.8,46.49,TRUE,Critical,19.34,92.49,0.781,Alarm,Moisture detected
+9/3/2025 12:00,CH4,CELL46,Parameter_Config,356.49,3.701,360.18,67,64.44,87.59,74.3,74.2,74.25,31.41,10.6,92.06,31.41,FALSE,OK,23.88,118.85,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 12:01,CH4,CELL28,End_Of_Charge,398.83,4.078,402.56,8.2,7.44,17.53,61.79,59.43,60.61,32.55,11.03,83.02,17.55,TRUE,OK,3.27,91.94,0.702,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 12:02,CH1,CELL35,Handshake,367.88,3.728,369.23,71.25,70.15,66.98,46.55,45.04,45.795,32.16,10.25,82.62,25.88,TRUE,Critical,26.21,91.98,0.784,Alarm,Moisture detected
+9/3/2025 12:03,CH10,CELL11,Handshake,329.17,4.029,324.63,53,53.41,0.39,58.36,57.36,57.86,20.71,6.16,84.94,8.64,TRUE,OK,17.45,92.25,0.592,Warning,Moisture detected
+9/3/2025 12:04,CH2,CELL21,Parameter_Config,313,3.925,315.05,87.42,90.17,83.39,28.34,25.04,26.69,31.09,6.18,92.24,49.09,TRUE,OK,27.36,108.02,0.657,Warning,Moisture detected
+9/3/2025 12:05,CH3,CELL3,End_Of_Charge,300.21,4.156,295.6,25.04,28.74,34.16,34.55,32.74,33.645,25.47,2.67,96.97,10.02,FALSE,OK,7.52,102.55,0.502,Warning,Normal operation
+9/3/2025 12:06,CH7,CELL28,Handshake,339.7,4.062,340.87,70.58,66.76,48.79,69.58,67.39,68.485,33.93,7.61,96.86,19.63,FALSE,OK,23.98,119.76,0.93,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 12:07,CH9,CELL21,Parameter_Config,386.67,3.658,388.92,110.11,106.83,73.85,40.96,36.51,38.735,29.27,8.85,94.27,38.87,TRUE,OK,42.58,95.44,0.791,Alarm,Moisture detected
+9/3/2025 12:08,CH8,CELL38,Recharge,350.52,3.779,346.93,53.55,52.49,91.93,73.97,72.68,73.325,20.93,4.39,81.23,17.11,TRUE,Warning,18.77,116.6,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 12:09,CH2,CELL12,Handshake,328.7,3.757,333.44,101.6,97.86,47.34,50.09,46.62,48.355,30.56,7.47,95.78,20.93,TRUE,OK,33.4,91.12,0.731,Alarm,Moisture detected
+9/3/2025 12:10,CH3,CELL32,Recharge,329.26,3.726,324.43,100.64,101.61,45.49,73.66,70.97,72.315,29.99,1.01,99.37,19.33,FALSE,OK,33.14,116.93,0.986,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 12:11,CH8,CELL47,Handshake,342.12,3.618,342.96,71.96,72.54,51.62,37.67,36.68,37.175,22.08,5.77,91.57,47.13,TRUE,Warning,24.62,99.92,0.635,Warning,Moisture detected
+9/3/2025 12:12,CH3,CELL31,Recharge,310.55,3.823,312.21,95.27,97.83,6.01,78.44,76.57,77.505,32.85,12.79,93,26.07,FALSE,OK,29.59,90.3,0.79,Alarm,Rapid temp rise; High internal resistance
+9/3/2025 12:13,CH3,CELL47,Parameter_Config,355.09,3.625,357.93,94.68,90.35,42.35,36.75,33.78,35.265,23.78,4.49,96.5,44.08,TRUE,OK,33.62,101.19,0.62,Warning,Moisture detected
+9/3/2025 12:14,CH2,CELL16,End_Of_Charge,343.53,3.781,341.89,32.08,36.27,40.25,74.2,72.44,73.32,20.9,12.85,90.38,28.12,FALSE,Warning,11.02,109.87,0.981,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 12:15,CH1,CELL16,Parameter_Config,321.27,4.125,319.1,25.55,28.82,56.27,71.74,69.58,70.66,28.89,14.52,86.63,0.44,FALSE,Warning,8.21,103.56,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 12:16,CH8,CELL42,Parameter_Config,334.64,3.652,336.46,102.97,99.14,47.72,47.53,46.24,46.885,34.76,14.86,82.23,14.21,FALSE,OK,34.46,90.54,0.66,Warning,High internal resistance
+9/3/2025 12:17,CH4,CELL21,End_Of_Charge,394.79,3.876,399.22,104.76,105.71,0.62,26.36,25.64,26,29.57,4.02,95.86,38.97,FALSE,OK,41.36,105.76,0.247,Watch,Normal operation
+9/3/2025 12:18,CH7,CELL21,Handshake,320.95,3.796,325.22,27.18,31.25,82.5,79.92,78.84,79.38,26.29,10.58,80.23,1.77,FALSE,OK,8.72,97.74,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 12:19,CH7,CELL12,End_Of_Charge,377.58,4.16,372.66,108.23,106.78,23.82,76.2,71.62,73.91,22.02,12.15,88.13,29.28,FALSE,OK,40.87,114.27,0.887,Alarm,Rapid temp rise; High internal resistance
+9/3/2025 12:20,CH4,CELL5,Parameter_Config,384.23,4.039,384.6,40.1,35.22,23.46,63.82,61.36,62.59,34.42,10.88,87.2,37.72,TRUE,Warning,15.41,107.77,0.739,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 12:21,CH7,CELL2,Parameter_Config,316.45,3.766,321.15,68.7,71.39,63.65,45.7,43.49,44.595,22,9.41,81.08,15.96,TRUE,OK,21.74,103.31,0.785,Alarm,Moisture detected
+9/3/2025 12:22,CH4,CELL48,Parameter_Config,350.79,3.663,352.69,82.32,83.14,76.46,47.23,44.66,45.945,34.4,13.02,98,44.32,TRUE,OK,28.88,117.9,0.849,Alarm,High internal resistance; Moisture detected
+9/3/2025 12:23,CH6,CELL13,Parameter_Config,300.74,4.125,297.25,25.23,27.68,97.83,74.1,72.64,73.37,21.16,13.87,93.86,40.97,TRUE,Warning,7.59,111.66,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 12:24,CH1,CELL33,Handshake,363.79,3.876,364.11,29.37,33.29,26.14,46.75,42.08,44.415,22.48,9.28,85.35,0.6,TRUE,Critical,10.68,97.18,0.606,Warning,Moisture detected
+9/3/2025 12:25,CH6,CELL8,End_Of_Charge,303.43,3.929,303.26,87.19,87.35,4.05,40.49,40.09,40.29,25.98,7.45,81.24,34.19,FALSE,Warning,26.46,92.81,0.417,Warning,Normal operation
+9/3/2025 12:26,CH6,CELL7,Parameter_Config,375.22,4.177,373.82,11.13,11.88,28.58,43.55,42.95,43.25,25.04,10.39,93.69,45.17,TRUE,OK,4.18,102.6,0.564,Warning,Moisture detected
+9/3/2025 12:27,CH5,CELL9,Parameter_Config,323.69,4.127,328.15,85.15,88.65,72.11,46.77,43.09,44.93,27.9,4.49,95.28,8.79,FALSE,OK,27.56,93.81,0.821,Alarm,Normal operation
+9/3/2025 12:28,CH7,CELL45,Handshake,391.44,3.939,392.78,81.68,81.4,76.09,28.55,23.95,26.25,32.14,9.48,87.15,14.59,FALSE,OK,31.97,98.71,0.681,Warning,Normal operation
+9/3/2025 12:29,CH8,CELL29,Parameter_Config,355.3,3.869,357.74,11.34,14.14,78.37,29.4,25.16,27.28,23.87,12.5,90.89,19.04,TRUE,OK,4.03,99.32,0.693,Warning,High internal resistance; Moisture detected
+9/3/2025 12:30,CH8,CELL31,Handshake,349.89,3.754,348.13,90.74,87.33,77.29,44.17,39.47,41.82,30.93,12.21,85.33,2.07,FALSE,Warning,31.75,119.1,0.837,Alarm,High internal resistance
+9/3/2025 12:31,CH4,CELL31,Parameter_Config,376.63,3.992,379.48,77.1,77.57,92.25,42.82,40.4,41.61,28.98,10.7,86.71,23.02,FALSE,Critical,29.04,108.21,0.881,Alarm,Normal operation
+9/3/2025 12:32,CH4,CELL49,Recharge,355.85,4.094,355.38,100.59,105.34,14.77,35.61,35.55,35.58,30.01,7.62,86.84,33.11,FALSE,OK,35.79,117.21,0.426,Warning,Normal operation
+9/3/2025 12:33,CH5,CELL1,Handshake,322.02,3.89,325.94,41.7,42.01,1.44,64.39,63.73,64.06,26.02,6.28,92.84,26.49,FALSE,Warning,13.43,93.23,0.652,Warning,Rapid temp rise
+9/3/2025 12:34,CH2,CELL36,Recharge,311.53,3.92,307.98,15.46,13.3,79.51,65.45,64.75,65.1,31.92,9.46,91.13,18.23,TRUE,OK,4.82,91.07,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 12:35,CH4,CELL4,Parameter_Config,337.54,3.797,336.24,95.41,95.89,75.63,40.25,35.63,37.94,20.54,7.78,85.3,19.66,FALSE,OK,32.2,102.55,0.777,Alarm,Normal operation
+9/3/2025 12:36,CH10,CELL48,Parameter_Config,311.94,3.726,315.94,104.89,103.71,92.01,26.1,23.82,24.96,25.64,3.98,88.85,5.79,TRUE,Warning,32.72,115.16,0.701,Alarm,Moisture detected
+9/3/2025 12:37,CH2,CELL36,Recharge,373.64,4.082,377.16,37.63,33.59,63.18,74.24,70.7,72.47,33.75,10.27,91.95,26.23,FALSE,OK,14.06,109.32,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 12:38,CH8,CELL6,Handshake,305.27,3.676,303.83,29.09,24.34,90.27,41.01,40.68,40.845,20.82,10.35,98.75,0.25,TRUE,OK,8.88,109.93,0.855,Alarm,Moisture detected
+9/3/2025 12:39,CH2,CELL12,Handshake,333.59,3.959,335.24,101.99,103.18,98.71,62.1,57.21,59.655,28.3,8.72,95.8,16.34,TRUE,Critical,34.02,97.07,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 12:40,CH8,CELL22,End_Of_Charge,398.48,3.768,398.25,84.24,81.17,62.85,40.22,39.83,40.025,26.28,6.69,83.2,24.25,FALSE,OK,33.57,115.56,0.738,Alarm,Normal operation
+9/3/2025 12:41,CH8,CELL23,Parameter_Config,335.84,4.12,337.14,116.99,118.27,83.77,63.24,61.8,62.52,34.98,13.17,85.6,36.58,FALSE,OK,39.29,90.82,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 12:42,CH4,CELL32,Recharge,392.58,4.128,389.59,23.72,20.6,85.97,53.52,48.78,51.15,20.43,11.97,92.57,49.81,FALSE,OK,9.31,107.01,0.962,Runaway,Critical thermal runaway risk
+9/3/2025 12:43,CH9,CELL31,Recharge,369.29,4.04,369.76,34.72,38.37,69.3,70.18,66.75,68.465,20.68,13.52,92.22,43.46,FALSE,OK,12.82,109.47,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 12:44,CH8,CELL16,Handshake,394.78,3.91,392.72,83.53,80.28,31.11,42.55,41.24,41.895,28.61,5.92,86.5,12.26,TRUE,OK,32.98,97.03,0.602,Warning,Moisture detected
+9/3/2025 12:45,CH4,CELL43,Parameter_Config,351.87,3.872,354.33,54.69,53.14,70.77,54.59,52.81,53.7,26.04,4.62,92.25,3.82,TRUE,OK,19.24,113.13,0.92,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 12:46,CH3,CELL39,Recharge,391.89,3.99,389.22,80.79,85.72,29.6,44.9,43.1,44,29.57,4.88,93.98,8.38,FALSE,Critical,31.66,97.38,0.617,Warning,Normal operation
+9/3/2025 12:47,CH9,CELL18,Handshake,329.69,3.744,325,24.45,23.2,35.74,50.93,47.6,49.265,33.3,4.14,97.98,21.64,FALSE,OK,8.06,109.3,0.682,Warning,Normal operation
+9/3/2025 12:48,CH2,CELL26,Parameter_Config,305.37,4.075,300.99,49.01,48.17,14.54,55.97,54.19,55.08,26.51,8.2,83.85,33.78,TRUE,OK,14.97,94.8,0.603,Warning,Moisture detected
+9/3/2025 12:49,CH7,CELL39,Parameter_Config,383.87,4.008,385.67,18.05,18.44,2.39,76.09,72.87,74.48,28.28,14.6,98.6,46.11,FALSE,OK,6.93,119.53,0.738,Alarm,Rapid temp rise; High internal resistance
+9/3/2025 12:50,CH7,CELL11,End_Of_Charge,307.89,3.977,305.89,62.23,57.25,32.86,53.95,53.68,53.815,21.65,14.48,84.75,1.36,FALSE,OK,19.16,99.59,0.723,Alarm,High internal resistance
+9/3/2025 12:51,CH10,CELL16,End_Of_Charge,318.7,3.708,323.44,55.12,52.31,99.83,43.9,39.52,41.71,27.62,14.01,92.04,36.97,FALSE,OK,17.57,109.72,0.93,Runaway,Critical thermal runaway risk; High internal resistance
+9/3/2025 12:52,CH10,CELL35,Recharge,386.97,3.944,382.5,12.25,10.02,45.87,74.66,70.48,72.57,29.69,1,99.99,47.49,FALSE,Warning,4.74,99.15,0.957,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 12:53,CH10,CELL41,End_Of_Charge,303.34,4.093,305.9,19.55,23.83,99.35,42.58,42.04,42.31,22.03,8.44,87.93,15.22,FALSE,Critical,5.93,112.65,0.912,Runaway,Critical thermal runaway risk
+9/3/2025 12:54,CH2,CELL45,Recharge,344.17,3.933,345.92,51.9,52.54,38.68,62.69,60.61,61.65,20.56,6.05,86.39,1.43,FALSE,OK,17.86,112.11,0.803,Alarm,Rapid temp rise
+9/3/2025 12:55,CH3,CELL47,Handshake,333.98,4.051,336.22,81.93,85.12,72.67,75.94,73.46,74.7,25.17,14.72,96.37,5.14,TRUE,Warning,27.36,112.55,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 12:56,CH10,CELL48,Recharge,334.51,3.78,337.7,94.11,95.39,39.24,26.51,26.02,26.265,25.05,9.81,82.59,26.35,FALSE,OK,31.48,91.51,0.476,Warning,Normal operation
+9/3/2025 12:57,CH2,CELL22,Parameter_Config,333.59,3.868,328.64,43.01,45.43,16.24,30.95,26.76,28.855,30.68,1.25,92.74,25.79,TRUE,OK,14.35,100.47,0.406,Warning,Moisture detected
+9/3/2025 12:58,CH5,CELL29,End_Of_Charge,369.87,3.693,369.23,83.64,84.71,41.78,34.22,32.05,33.135,30.14,6.34,87.53,17.65,TRUE,Warning,30.94,111.38,0.53,Warning,Moisture detected
+9/3/2025 12:59,CH4,CELL28,Handshake,342.98,3.958,341.88,13.52,15.46,21.26,59.79,56.77,58.28,21.46,6.81,94.57,48.7,TRUE,OK,4.64,107.82,0.746,Alarm,Moisture detected
+9/3/2025 13:00,CH5,CELL32,Handshake,320.15,3.782,317.17,29.26,33.65,20.78,59.48,59.38,59.43,28.53,3.62,96.14,19.56,TRUE,OK,9.37,105.56,0.701,Alarm,Moisture detected
+9/3/2025 13:01,CH7,CELL40,Handshake,305.17,3.823,308.25,97.5,96.96,11.83,46.28,42.73,44.505,23.97,10.93,83.86,32.43,FALSE,Critical,29.75,91.77,0.54,Warning,Normal operation
+9/3/2025 13:02,CH10,CELL9,End_Of_Charge,394.06,4.086,389.71,108.98,107.47,9.52,29.62,26.55,28.085,25.4,12.15,85.5,32.81,FALSE,OK,42.94,96.91,0.356,Watch,High internal resistance
+9/3/2025 13:03,CH5,CELL28,Handshake,358.28,4.036,362.36,73.69,70.17,2.96,27.3,24.88,26.09,30.7,7.98,90.55,37.02,FALSE,OK,26.4,106.44,0.303,Watch,Normal operation
+9/3/2025 13:04,CH7,CELL45,End_Of_Charge,380.56,3.891,376.09,15.35,16.62,54.71,60.65,58.74,59.695,29.77,1.81,84.5,39.74,TRUE,OK,5.84,90.85,0.888,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 13:05,CH7,CELL3,Recharge,307.69,4.026,310.29,48.42,46.96,63.53,68.7,64.6,66.65,21.93,13.35,88.12,32.42,FALSE,OK,14.9,107.92,0.987,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 13:06,CH8,CELL33,End_Of_Charge,347.76,4.019,351.44,29.23,30.48,95.38,31.79,30.08,30.935,34.14,11.63,80.24,19.92,FALSE,Critical,10.17,100.16,0.792,Alarm,Normal operation
+9/3/2025 13:07,CH9,CELL21,End_Of_Charge,388.69,4.163,388.16,26.63,31.58,36.74,77.99,76.86,77.425,26.16,13.77,84.85,10.93,FALSE,Critical,10.35,114.43,0.968,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 13:08,CH1,CELL3,Parameter_Config,348.86,3.632,351.61,84.26,84.01,81.04,56.84,55.32,56.08,24.25,12.48,88.14,35.24,FALSE,Critical,29.39,100.75,1,Runaway,Critical thermal runaway risk; High internal resistance
+9/3/2025 13:09,CH6,CELL9,Recharge,327.91,4.026,324.44,101.91,103.07,34.18,66.1,65.3,65.7,23.56,4.02,89.22,34.34,TRUE,OK,33.42,96.26,0.806,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 13:10,CH1,CELL2,Handshake,370.43,4.083,368.95,93.82,92.21,52.15,56.78,52.39,54.585,26.91,1.95,86.21,13.7,FALSE,OK,34.75,107.09,0.825,Alarm,Normal operation
+9/3/2025 13:11,CH6,CELL44,Handshake,369.77,3.93,369.85,117.13,121.19,56.85,37.26,34.1,35.68,31.28,11.31,90.38,1.52,FALSE,Warning,43.31,116.01,0.668,Warning,Normal operation
+9/3/2025 13:12,CH8,CELL21,Handshake,319.43,3.75,323.08,101.25,103.45,48.77,28.88,25.22,27.05,21.53,2,80.42,47.17,TRUE,Critical,32.34,113.03,0.489,Warning,Moisture detected
+9/3/2025 13:13,CH1,CELL49,Recharge,367.34,3.912,370.05,10.5,6.68,71.01,58.23,57.07,57.65,32.42,3.5,82.28,18.63,TRUE,OK,3.86,103.11,0.927,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 13:14,CH1,CELL36,End_Of_Charge,319.9,4.002,317.31,58.25,62.89,76,64.64,61.22,62.93,34.84,4.81,93.93,19.3,FALSE,Warning,18.63,96.37,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 13:15,CH4,CELL20,End_Of_Charge,377.67,3.821,379.72,8.22,6.29,72.29,36.97,33.76,35.365,27.97,13.35,83.59,20.33,TRUE,OK,3.1,103.44,0.762,Alarm,High internal resistance; Moisture detected
+9/3/2025 13:16,CH3,CELL3,Handshake,356.06,4.078,353.2,52.94,48.82,67.81,63.3,59.56,61.43,32.13,12.73,97.96,39.65,FALSE,Warning,18.85,106.18,0.969,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 13:17,CH7,CELL45,Recharge,369.01,3.747,364.81,17.11,13.18,32.35,58.93,54.24,56.585,25.09,2.42,94.6,38.2,FALSE,OK,6.31,118.53,0.743,Alarm,Normal operation
+9/3/2025 13:18,CH10,CELL2,Handshake,359.12,3.725,354.25,19.79,20.52,12.66,61.71,60.32,61.015,23.18,8.44,96.62,41.24,TRUE,OK,7.11,110.84,0.644,Warning,Rapid temp rise; Moisture detected
+9/3/2025 13:19,CH9,CELL15,Parameter_Config,363.09,4.077,365.95,119.3,120.72,86.09,26.88,24.5,25.69,25.27,12.16,85.88,0.64,FALSE,Warning,43.32,92.74,0.721,Alarm,High internal resistance
+9/3/2025 13:20,CH6,CELL31,Handshake,366.36,3.731,363.35,9.56,11.48,61.2,57.54,56.96,57.25,24.28,8.94,91.49,48.84,TRUE,Warning,3.5,108.12,0.871,Alarm,Moisture detected
+9/3/2025 13:21,CH8,CELL27,Handshake,328.84,3.685,332.28,16.47,16.96,43.78,52.54,52.39,52.465,22.3,9.65,96.53,17.44,TRUE,OK,5.42,96.49,0.757,Alarm,Moisture detected
+9/3/2025 13:22,CH10,CELL39,Handshake,331.38,3.977,328.61,2.18,5.8,66.73,32.76,29.81,31.285,25.96,1.41,97.92,1.41,FALSE,Critical,0.72,96.79,0.648,Warning,Normal operation
+9/3/2025 13:23,CH8,CELL19,End_Of_Charge,328.2,4.043,324.83,105.07,101.96,11.86,61.38,56.4,58.89,30.79,6.59,98.51,22.71,TRUE,Critical,34.48,91.31,0.659,Warning,Rapid temp rise; Moisture detected
+9/3/2025 13:24,CH9,CELL34,Recharge,301.46,4.088,302.75,36.81,41.2,92.33,50.14,48.09,49.115,20.72,14.06,86.82,34.16,FALSE,OK,11.1,111.27,0.966,Runaway,Critical thermal runaway risk; High internal resistance
+9/3/2025 13:25,CH3,CELL27,Parameter_Config,395.58,3.615,393.19,34.77,32.97,27.59,60.9,60.6,60.75,32.51,8.43,89.54,44.98,TRUE,OK,13.75,96.04,0.719,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 13:26,CH7,CELL14,Handshake,376.96,3.695,373.38,33.59,34.31,54.72,51,49.01,50.005,31.41,3.97,83.63,45.79,TRUE,OK,12.66,105.43,0.786,Alarm,Moisture detected
+9/3/2025 13:27,CH9,CELL19,Handshake,305.34,3.827,300.49,82.21,78.7,64.11,69.2,66.68,67.94,31.15,8.02,84.22,12.89,TRUE,OK,25.1,92.05,0.981,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 13:28,CH7,CELL11,End_Of_Charge,375.45,3.717,379.57,113.43,113.42,23.84,55.33,51.56,53.445,30.21,8.27,91.12,39.87,TRUE,Warning,42.59,90.6,0.684,Warning,Moisture detected
+9/3/2025 13:29,CH7,CELL13,End_Of_Charge,389.5,3.9,393.84,68.36,67.96,94.4,59.23,57.92,58.575,30.22,2.06,90.12,49.77,FALSE,OK,26.63,115.74,1,Runaway,Critical thermal runaway risk
+9/3/2025 13:30,CH1,CELL47,Handshake,353.63,3.657,350.51,32.65,35.13,74.14,69.24,64.5,66.87,22.06,12.66,99.46,47.16,TRUE,OK,11.55,94.23,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 13:31,CH10,CELL21,Handshake,368.69,3.76,365.29,105.85,104.04,50.71,41.22,39.15,40.185,27.68,3.9,83.81,33.34,TRUE,Critical,39.03,105.44,0.656,Warning,Moisture detected
+9/3/2025 13:32,CH2,CELL5,End_Of_Charge,312.46,4.018,316.95,74.51,73.94,86.17,30.22,28.32,29.27,32.19,3.31,89.64,35.85,TRUE,OK,23.28,118.43,0.756,Alarm,Moisture detected
+9/3/2025 13:33,CH5,CELL29,Recharge,392.07,4.08,393.1,64.09,64.37,36.16,37.03,35.97,36.5,34.38,5.76,99.93,49.39,TRUE,OK,25.13,110.92,0.56,Warning,Moisture detected
+9/3/2025 13:34,CH7,CELL10,Parameter_Config,379.05,3.913,375.32,3.87,6.2,40.06,47.82,46.99,47.405,29.78,11.35,81.73,31.98,FALSE,OK,1.47,103.81,0.689,Warning,Normal operation
+9/3/2025 13:35,CH9,CELL10,Parameter_Config,315.71,4.097,316.64,0.34,-3.3,20.87,69.11,66.09,67.6,23.57,9.68,92.86,1.78,FALSE,Warning,0.11,110.83,0.783,Alarm,Rapid temp rise
+9/3/2025 13:36,CH3,CELL34,Handshake,324.36,3.965,327.77,90.25,88.93,70.47,71.1,69.33,70.215,21.85,4.52,84.83,4.28,FALSE,OK,29.27,117.1,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 13:37,CH6,CELL27,Parameter_Config,316.2,3.638,320.29,49.95,54.01,22.61,76.82,74.1,75.46,34.03,12.51,86.45,24.56,FALSE,OK,15.79,113.47,0.857,Alarm,Rapid temp rise; High internal resistance
+9/3/2025 13:38,CH5,CELL45,Parameter_Config,335.77,3.625,334.53,111.57,106.92,22.37,71.62,67.12,69.37,23.48,2.85,83.19,14.63,TRUE,Warning,37.46,117.22,0.84,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 13:39,CH5,CELL30,End_Of_Charge,319.13,4.124,322.85,107.13,104.53,33.07,57.35,54.8,56.075,25.24,7.21,92.9,48.22,TRUE,OK,34.19,108.69,0.776,Alarm,Moisture detected
+9/3/2025 13:40,CH9,CELL35,Parameter_Config,388.57,4.191,386.58,47.81,50.44,25.94,60.98,60.78,60.88,32.31,4.34,96.5,45.71,TRUE,OK,18.58,93.11,0.734,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 13:41,CH6,CELL29,Parameter_Config,339.49,4.035,338.55,68.85,69.39,66.88,44.46,42.3,43.38,22.23,12.17,83.25,46.65,TRUE,OK,23.37,119.66,0.789,Alarm,High internal resistance; Moisture detected
+9/3/2025 13:42,CH8,CELL31,Recharge,358.67,3.662,358,81.71,77.37,26.43,77.98,76.69,77.335,30.13,1.27,93.48,45.2,TRUE,OK,29.31,106.67,0.905,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 13:43,CH3,CELL32,End_Of_Charge,364.44,3.776,363.64,50.55,50.08,64.53,31.71,30.88,31.295,25.67,10.55,98.64,3,TRUE,Critical,18.42,118.84,0.643,Warning,Moisture detected
+9/3/2025 13:44,CH8,CELL10,Handshake,304.78,4.041,301.24,62.34,60.7,48.47,33.77,33.72,33.745,28.36,1.65,97.46,15.25,TRUE,OK,19,102.79,0.549,Warning,Moisture detected
+9/3/2025 13:45,CH3,CELL5,End_Of_Charge,315.89,3.781,315.24,95.81,95.39,64.31,40.67,37.29,38.98,24.45,1.8,97.87,4.93,TRUE,OK,30.27,95.92,0.707,Alarm,Moisture detected
+9/3/2025 13:46,CH4,CELL33,Recharge,305.74,3.845,304.17,91.49,93.89,23.03,39.31,36.03,37.67,29.03,12.52,83.16,6.94,TRUE,OK,27.97,97.02,0.5,Warning,High internal resistance; Moisture detected
+9/3/2025 13:47,CH5,CELL27,Parameter_Config,309.35,3.678,313.74,14.63,19.2,41.16,32.76,31.29,32.025,25.97,1.98,82.81,8.67,TRUE,Warning,4.53,105.52,0.556,Warning,Moisture detected
+9/3/2025 13:48,CH8,CELL25,Parameter_Config,380.13,3.915,376.89,90.32,92.81,30.89,30.25,25.25,27.75,21.96,4.01,82.62,3.91,FALSE,Warning,34.33,104.88,0.488,Warning,Normal operation
+9/3/2025 13:49,CH5,CELL22,Handshake,373.37,4.057,369.84,52.11,47.24,79.99,30.35,29.12,29.735,32.78,11.02,87.37,31.12,TRUE,OK,19.46,102.56,0.738,Alarm,Moisture detected
+9/3/2025 13:50,CH7,CELL6,Parameter_Config,322.9,3.635,325.67,38.7,42.48,44.83,37.78,36.02,36.9,22.72,1.59,92.19,44.03,TRUE,OK,12.5,100.23,0.606,Warning,Moisture detected
+9/3/2025 13:51,CH5,CELL4,End_Of_Charge,381.54,3.824,385.05,80.04,80.65,58.45,25.63,22.29,23.96,34.39,12.1,87.56,39.74,FALSE,Critical,30.54,92.4,0.543,Warning,High internal resistance
+9/3/2025 13:52,CH1,CELL37,Handshake,315.5,3.611,318.43,30.36,28.85,73.42,78.47,77.14,77.805,25.01,6.7,98.7,19.19,FALSE,OK,9.58,109.32,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 13:53,CH10,CELL46,Handshake,313.68,4.183,313.21,9.73,14.22,28.04,34.04,33.8,33.92,25.42,5.32,97.28,4.01,TRUE,OK,3.05,117.38,0.472,Warning,Moisture detected
+9/3/2025 13:54,CH7,CELL27,End_Of_Charge,390.98,3.966,394.59,92.74,89.45,49.23,69.06,68.8,68.93,32.19,4.25,88.51,10.62,TRUE,Warning,36.26,98.04,0.921,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 13:55,CH8,CELL39,Handshake,314.74,4.195,313.94,3.56,8.31,97.64,68.84,64.68,66.76,27.84,6.09,81.13,9.35,TRUE,OK,1.12,117.66,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 13:56,CH2,CELL32,Recharge,368.07,4.047,368.97,86.68,82.78,17.17,34.05,33.68,33.865,28.15,4.28,97.38,39.22,FALSE,Warning,31.9,96.36,0.434,Warning,Normal operation
+9/3/2025 13:57,CH3,CELL21,End_Of_Charge,354.21,3.8,354.03,65.24,66.75,70.8,69.98,67.94,68.96,20.46,2.94,98.37,27.24,FALSE,OK,23.11,109.86,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 13:58,CH10,CELL25,End_Of_Charge,370.85,3.909,369.99,43.85,42.9,69.52,79.11,78.08,78.595,29.46,13.95,84.26,22.92,TRUE,Critical,16.26,94.96,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 13:59,CH9,CELL8,Parameter_Config,335.75,3.689,338.85,54.98,51.68,60.75,64.16,59.57,61.865,21.85,14.86,87.48,22.72,FALSE,OK,18.46,111.54,0.891,Alarm,Rapid temp rise; High internal resistance
+9/3/2025 14:00,CH6,CELL1,Parameter_Config,396.11,4.001,395.75,52.86,49.65,29.61,73.19,71.63,72.41,31.93,4.62,90.69,14.75,TRUE,OK,20.94,97.49,0.883,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 14:01,CH7,CELL48,End_Of_Charge,324.52,4.121,322.05,73.66,73.21,57.88,66.12,63.35,64.735,24.08,8.34,90.49,31.16,FALSE,OK,23.9,104.08,0.963,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 14:02,CH9,CELL47,Parameter_Config,396.2,3.654,398.57,24.67,25.51,47.5,76.78,75.38,76.08,31.61,3.38,84.14,37.51,FALSE,Warning,9.77,90.96,0.991,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 14:03,CH2,CELL45,End_Of_Charge,337.5,3.912,335.47,45.06,41.7,40.41,32.97,30.48,31.725,24.17,1.43,88.04,38.27,FALSE,Warning,15.21,99.92,0.52,Warning,Normal operation
+9/3/2025 14:04,CH8,CELL5,Handshake,345.43,3.836,348.25,20.92,16.04,48.1,33.94,30.38,32.16,23.23,2.02,87.09,13.15,FALSE,Warning,7.23,117.23,0.565,Warning,Normal operation
+9/3/2025 14:05,CH8,CELL38,Parameter_Config,386.83,4.168,387.34,9.76,8.36,65.06,34.03,32.92,33.475,30.77,14.49,85.72,20.23,FALSE,OK,3.78,93.72,0.682,Warning,High internal resistance
+9/3/2025 14:06,CH8,CELL10,Recharge,318.15,4.03,319.08,107.19,107.23,24.48,54.92,53.2,54.06,22.32,11.74,95.73,30.83,TRUE,OK,34.1,97.29,0.667,Warning,Moisture detected
+9/3/2025 14:07,CH8,CELL2,End_Of_Charge,305.58,4.095,309.96,119.21,122.61,90.35,55.2,52.88,54.04,20.57,2.14,80.01,38.4,TRUE,Critical,36.43,100.02,1,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 14:08,CH10,CELL50,Recharge,306.16,4.194,308.68,112.3,110.42,2.39,40.32,36.57,38.445,30.51,2.42,94.12,13.58,FALSE,Critical,34.38,118.4,0.392,Watch,Normal operation
+9/3/2025 14:09,CH8,CELL7,Handshake,380.31,4.066,379.18,11.93,13.86,25.39,66.58,64.25,65.415,26.69,10.38,98.07,0.2,FALSE,OK,4.54,111.11,0.764,Alarm,Rapid temp rise
+9/3/2025 14:10,CH6,CELL42,Handshake,381.52,4.01,380.2,42.11,42.03,89.38,60.86,59.46,60.16,30.36,10.11,84.27,36.39,FALSE,OK,16.07,105.14,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 14:11,CH10,CELL39,Handshake,341.69,4.108,341.86,5.16,5.96,4.64,77.14,73.97,75.555,34.86,11.03,80.84,5.67,TRUE,OK,1.76,116.09,0.772,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 14:12,CH5,CELL3,End_Of_Charge,399.72,4.012,401.27,80.63,80.21,44.57,61.01,58.42,59.715,34.02,2.19,89.77,38.69,TRUE,OK,32.23,118.23,0.834,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 14:13,CH3,CELL4,Recharge,332.53,3.699,330.47,33.89,36.98,36.31,41.74,40.73,41.235,27.55,10.29,88.49,47.12,FALSE,OK,11.27,119.9,0.635,Warning,Normal operation
+9/3/2025 14:14,CH7,CELL26,End_Of_Charge,319.54,4.125,322.67,42.94,45.28,31.78,30.2,26.41,28.305,21.44,4.13,87.62,11.63,TRUE,OK,13.72,109.39,0.466,Warning,Moisture detected
+9/3/2025 14:15,CH1,CELL22,Recharge,315.14,4.14,314.97,27.54,25.69,72.89,71.23,66.81,69.02,28.78,13.76,89.98,29.35,TRUE,Critical,8.68,103.93,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 14:16,CH7,CELL48,End_Of_Charge,384.33,3.937,380.7,3.95,2.53,1.7,31.35,26.77,29.06,21.99,6.64,97.58,23.51,TRUE,Critical,1.52,112.54,0.346,Watch,Moisture detected
+9/3/2025 14:17,CH6,CELL40,Handshake,378.77,3.777,379.78,77.56,74.09,98.17,63.04,60.16,61.6,20.71,12.86,86.61,20.9,FALSE,OK,29.38,103.39,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 14:18,CH4,CELL15,Parameter_Config,371.59,4.145,371.13,23.67,28.43,76.68,31.2,27.49,29.345,27.55,1.2,88.03,41.39,TRUE,OK,8.8,100.27,0.724,Alarm,Moisture detected
+9/3/2025 14:19,CH6,CELL17,Handshake,354.36,4.139,356.14,62.77,63.26,76.18,44.6,40.03,42.315,26.1,14.76,96.99,16.53,TRUE,Warning,22.24,114.25,0.792,Alarm,High internal resistance; Moisture detected
+9/3/2025 14:20,CH7,CELL15,Recharge,352.28,3.749,350.78,20,15.79,86,36.21,34.27,35.24,20.6,2.8,81.82,42.97,TRUE,Warning,7.05,97,0.831,Alarm,Moisture detected
+9/3/2025 14:21,CH1,CELL18,Parameter_Config,311.52,3.958,308.65,92.23,87.26,58.53,79.16,78.92,79.04,25.7,5.53,92.35,27.25,TRUE,OK,28.73,110.41,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 14:22,CH6,CELL31,Recharge,378.88,3.957,383.08,9.47,14.44,75.61,65.31,61.46,63.385,24.02,11.66,93.3,6.91,FALSE,OK,3.59,91.08,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 14:23,CH9,CELL12,End_Of_Charge,373.18,4.164,375.53,84.12,86.34,66.87,36.41,35.27,35.84,28.18,4.44,94.64,18.67,FALSE,OK,31.39,91.83,0.72,Alarm,Normal operation
+9/3/2025 14:24,CH5,CELL40,End_Of_Charge,330.09,3.717,325.99,70.9,72.81,5.94,50.66,48.02,49.34,27.08,5.06,86.76,29.05,TRUE,Warning,23.4,103.42,0.517,Warning,Moisture detected
+9/3/2025 14:25,CH9,CELL1,End_Of_Charge,343,3.658,347.93,96.37,96.52,79.77,77.79,77.51,77.65,30.29,8,95.03,41.71,FALSE,OK,33.05,108.19,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 14:26,CH4,CELL13,Recharge,347.85,3.915,344.24,41.75,37.5,79.01,26.51,21.69,24.1,20.8,12.39,99.99,16.13,FALSE,OK,14.52,113.18,0.653,Warning,High internal resistance
+9/3/2025 14:27,CH8,CELL27,Recharge,393.39,3.74,393.83,34.75,39.2,77.57,63.37,62.2,62.785,27.62,11.34,92.69,4.66,FALSE,OK,13.67,103.04,0.992,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 14:28,CH5,CELL45,Handshake,375.76,3.894,375.3,20.68,15.7,21.3,52.79,49.1,50.945,28.08,12.47,86.56,44.3,TRUE,OK,7.77,114.76,0.626,Warning,High internal resistance; Moisture detected
+9/3/2025 14:29,CH2,CELL30,Recharge,384.82,3.837,381.28,27.67,25.27,43.98,25.64,24.87,25.255,23.41,1.44,81.36,19.19,FALSE,OK,10.65,101.35,0.501,Warning,Normal operation
+9/3/2025 14:30,CH3,CELL48,End_Of_Charge,354.59,3.848,358.53,63.47,65.32,0.79,48.35,47.48,47.915,24.46,8.24,84.74,15.26,TRUE,OK,22.51,114.13,0.497,Warning,Moisture detected
+9/3/2025 14:31,CH6,CELL31,End_Of_Charge,312.56,3.887,311.58,98.59,101.18,55.13,49.88,49.79,49.835,30.44,13.57,85.24,17.69,FALSE,OK,30.82,96.47,0.813,Alarm,High internal resistance
+9/3/2025 14:32,CH4,CELL38,Parameter_Config,311.56,3.916,309.97,18.24,14.17,52.19,43.13,38.88,41.005,33.54,12.35,95.66,7.56,FALSE,OK,5.68,106.46,0.703,Alarm,High internal resistance
+9/3/2025 14:33,CH7,CELL47,Recharge,338.87,3.657,341.23,16.97,19.65,61.18,50.7,47.55,49.125,21.6,1.11,85.11,33.26,FALSE,Critical,5.75,108.15,0.837,Alarm,Normal operation
+9/3/2025 14:34,CH9,CELL35,Handshake,373.59,3.798,370.33,31.23,32.48,31.45,79.63,77.16,78.395,21.01,5.92,85.4,9.5,FALSE,OK,11.67,96.42,0.956,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 14:35,CH8,CELL18,End_Of_Charge,310.6,4.155,310.98,25.52,30.08,41.62,65.82,65.06,65.44,24.11,9.79,90.44,12.14,TRUE,OK,7.93,110.13,0.866,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 14:36,CH5,CELL32,Recharge,341.17,3.98,341.03,6.88,6.7,78.02,56.39,55.91,56.15,26.64,11.22,93.44,23.87,FALSE,OK,2.35,96.05,0.932,Runaway,Critical thermal runaway risk
+9/3/2025 14:37,CH2,CELL31,Recharge,390.5,3.754,389.48,38.33,34.2,59.6,67.07,64.6,65.835,33.08,7.28,82.05,1.5,TRUE,Warning,14.97,101.71,0.985,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 14:38,CH6,CELL40,Parameter_Config,378.03,3.714,376.29,12.45,15.89,18.87,58.73,56.76,57.745,21.79,5.11,84.08,39.43,FALSE,Warning,4.71,94.81,0.666,Warning,Normal operation
+9/3/2025 14:39,CH1,CELL6,Handshake,304.61,4,304.65,73.43,72.5,37.5,64.71,64.23,64.47,20.43,5.56,82.93,10.4,TRUE,OK,22.37,102.91,0.832,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 14:40,CH5,CELL39,Recharge,362.7,3.983,365.45,81.83,80.04,58,58.42,56.37,57.395,21.37,2.78,90.53,21.27,TRUE,Warning,29.68,113.81,0.852,Alarm,Moisture detected
+9/3/2025 14:41,CH8,CELL28,Handshake,316.97,3.839,320.17,111.58,111.11,79.13,74.22,70.17,72.195,32.28,12.96,89.28,39.72,FALSE,OK,35.37,100.56,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 14:42,CH10,CELL37,Parameter_Config,374.19,4.104,369.26,92.98,91.44,28.31,66.52,62.21,64.365,31.53,10.32,82.11,33.64,TRUE,OK,34.79,93.82,0.785,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 14:43,CH8,CELL2,Recharge,333.63,3.825,331.37,67.92,68.12,91.37,31.17,30.83,31,20.29,11.69,95.02,49.93,FALSE,OK,22.66,115.09,0.744,Alarm,Normal operation
+9/3/2025 14:44,CH4,CELL17,End_Of_Charge,304.14,3.676,306.69,61.94,62.53,66.15,44.8,43.13,43.965,20.07,1.23,97.3,11.17,TRUE,OK,18.84,111.04,0.779,Alarm,Moisture detected
+9/3/2025 14:45,CH3,CELL6,Parameter_Config,318.66,3.612,318.31,102.86,101.68,83.6,45.54,42.15,43.845,21.02,6.95,92.66,41.81,FALSE,OK,32.78,107.93,0.867,Alarm,Normal operation
+9/3/2025 14:46,CH3,CELL25,End_Of_Charge,338.87,3.957,339.99,32.18,30.75,96.56,72.77,71.92,72.345,20.33,3.71,95.51,11.53,TRUE,Critical,10.9,104.73,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 14:47,CH7,CELL24,Parameter_Config,310.81,3.616,311.45,74.1,77.67,80.26,38.44,36.62,37.53,31.45,13.06,89.74,40.69,TRUE,OK,23.03,111.04,0.782,Alarm,High internal resistance; Moisture detected
+9/3/2025 14:48,CH2,CELL49,Parameter_Config,362.57,3.889,366.37,65.15,67.92,21.87,26.91,23.68,25.295,33.24,4.18,87.39,31.65,TRUE,Warning,23.62,107.63,0.379,Watch,Moisture detected
+9/3/2025 14:49,CH10,CELL32,Handshake,306.14,4.191,302.87,19.59,18.39,62.9,50.55,49.69,50.12,28.34,5.68,96.03,30.53,TRUE,OK,6,119.68,0.809,Alarm,Moisture detected
+9/3/2025 14:50,CH1,CELL6,Recharge,304.79,3.999,301.26,1.49,4.52,17.08,33.62,28.63,31.125,27.93,7.93,91.25,33.52,FALSE,OK,0.45,98.46,0.437,Warning,Normal operation
+9/3/2025 14:51,CH9,CELL15,End_Of_Charge,361.96,4.145,365.76,94.64,97.73,86.96,61.86,60.26,61.06,27.55,5.45,90.51,35.47,FALSE,OK,34.26,110.13,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 14:52,CH2,CELL15,Parameter_Config,377.48,3.698,379.96,26.27,22.84,24.64,59.13,58.7,58.915,26.76,6.21,96.68,47.8,FALSE,OK,9.92,112.48,0.723,Alarm,Normal operation
+9/3/2025 14:53,CH2,CELL44,End_Of_Charge,341.1,3.906,337.09,66.16,66.77,21.25,49.47,44.65,47.06,21.78,1.44,92.37,35.47,FALSE,OK,22.57,90.81,0.595,Warning,Normal operation
+9/3/2025 14:54,CH10,CELL17,Handshake,344.15,4.176,347.97,42.67,43.58,20.37,29.89,24.94,27.415,25.82,3.66,86.06,6.41,TRUE,OK,14.68,91.88,0.413,Warning,Moisture detected
+9/3/2025 14:55,CH10,CELL26,Handshake,327.65,3.797,327.26,74.41,74.57,44.5,66.71,62.57,64.64,28.67,14.92,89.95,16.41,TRUE,Warning,24.38,111.15,0.885,Alarm,Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 14:56,CH7,CELL45,Handshake,326.61,3.814,327.49,46.03,50.49,48.17,76.03,75.36,75.695,34.91,1.66,81.92,39.07,TRUE,OK,15.03,95.5,0.99,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 14:57,CH10,CELL37,Recharge,307.26,4.092,303.49,66.97,67.73,32.28,46.52,45.09,45.805,31.85,3.44,88.92,38.5,FALSE,OK,20.58,106.47,0.651,Warning,Normal operation
+9/3/2025 14:58,CH7,CELL8,End_Of_Charge,303.04,3.603,302.05,103.47,102,35,25.74,23.27,24.505,28.93,3.93,93.41,4.91,TRUE,OK,31.36,93.5,0.483,Warning,Moisture detected
+9/3/2025 14:59,CH4,CELL47,Parameter_Config,319.01,4.083,314.32,86.99,88.72,79.06,35.36,32.85,34.105,30.4,5.78,98.39,35.58,FALSE,OK,27.75,109.43,0.713,Alarm,Normal operation
+9/3/2025 15:00,CH3,CELL27,Recharge,316.73,3.842,313.25,85.09,87.29,24.5,25.25,23.65,24.45,29.24,7.56,95.61,42,TRUE,OK,26.95,96.46,0.39,Watch,Moisture detected
+9/3/2025 15:01,CH10,CELL19,Recharge,384.14,3.848,380.51,1.64,5.1,18.31,56.81,53.47,55.14,34.98,7.11,82.69,38.05,TRUE,OK,0.63,117.54,0.672,Warning,Moisture detected
+9/3/2025 15:02,CH10,CELL25,Recharge,385.26,4.128,381.71,32.34,32.57,48.97,31.98,29.17,30.575,34.95,4.89,96.7,26.99,FALSE,Critical,12.46,110.98,0.544,Warning,Normal operation
+9/3/2025 15:03,CH2,CELL22,Recharge,312.84,3.684,316.98,89.01,86.69,48.09,71.02,67.61,69.315,27.26,11.25,81.03,36.16,TRUE,OK,27.85,97.8,0.945,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 15:04,CH1,CELL9,End_Of_Charge,312.99,4.005,314.5,49.71,52.07,67.38,54.1,49.93,52.015,21.24,9.66,95.15,31.36,FALSE,OK,15.56,91.26,0.877,Alarm,Normal operation
+9/3/2025 15:05,CH1,CELL32,End_Of_Charge,351.98,3.655,347.02,76.63,72.59,76.36,32.65,28.66,30.655,22.52,7.99,90.04,34.31,TRUE,OK,26.97,107.47,0.663,Warning,Moisture detected
+9/3/2025 15:06,CH8,CELL10,Recharge,300.13,3.837,299.54,33.48,33.81,95.69,75.49,70.58,73.035,25.39,6.18,92.11,29.74,TRUE,Warning,10.05,113.49,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 15:07,CH9,CELL46,Handshake,382.19,4.018,382.8,45.39,44.5,88.74,27.29,23.6,25.445,21.58,10.83,98.51,3.02,FALSE,OK,17.35,100.33,0.73,Alarm,Normal operation
+9/3/2025 15:08,CH1,CELL7,Recharge,360.21,4.11,362.76,8.57,11.36,46.23,52.63,49.12,50.875,34.48,9.3,80.81,27.64,TRUE,OK,3.09,106.41,0.781,Alarm,Moisture detected
+9/3/2025 15:09,CH5,CELL20,Recharge,345.81,3.624,341.48,36.05,32.35,21.8,70.55,65.81,68.18,22.57,4.04,84.43,9.03,FALSE,OK,12.47,119.59,0.833,Alarm,Rapid temp rise
+9/3/2025 15:10,CH4,CELL48,Parameter_Config,335.6,3.637,337.13,0.82,2.57,56.33,78.78,75.76,77.27,24.15,4.6,98.4,38.38,TRUE,OK,0.28,119.84,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 15:11,CH2,CELL5,Parameter_Config,359.96,4.077,359.28,76.78,72.93,24.76,74.09,72.85,73.47,26.03,7.5,96.33,25.6,TRUE,OK,27.64,90.85,0.849,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 15:12,CH2,CELL42,Recharge,353.36,3.961,349.96,84.58,85.2,21.91,26.84,22.32,24.58,33.48,13.09,94.27,6.54,TRUE,OK,29.89,99.68,0.376,Watch,High internal resistance; Moisture detected
+9/3/2025 15:13,CH5,CELL8,Parameter_Config,377.8,4.018,374.48,6.01,9.61,71.14,37.1,34.54,35.82,30.12,1.15,98.61,25,FALSE,OK,2.27,98.27,0.698,Warning,Normal operation
+9/3/2025 15:14,CH6,CELL25,End_Of_Charge,343.35,3.984,345.28,93.06,91.2,74.22,27.8,25.29,26.545,27.1,10.38,83.72,43.54,FALSE,OK,31.95,98.22,0.618,Warning,Normal operation
+9/3/2025 15:15,CH3,CELL46,Handshake,344.49,3.766,343.58,23.99,24.09,5.28,72.42,71.51,71.965,23.39,6.51,89.39,39.76,FALSE,OK,8.26,115.49,0.79,Alarm,Rapid temp rise
+9/3/2025 15:16,CH2,CELL40,Parameter_Config,321.71,3.62,324.85,14.54,17.4,19.03,27.17,26.37,26.77,29.34,3.45,98.5,16.91,FALSE,Warning,4.68,97.8,0.407,Warning,Normal operation
+9/3/2025 15:17,CH10,CELL49,Recharge,353.75,3.913,353.02,99.76,96.52,53.55,61.72,60.74,61.23,25.75,10.22,81.55,31.91,TRUE,Warning,35.29,104.05,0.866,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 15:18,CH4,CELL18,Handshake,389.73,3.763,393.79,41.08,44.05,76.71,53.82,50.49,52.155,27.88,2.34,83.06,8.38,TRUE,OK,16.01,106.08,0.951,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 15:19,CH3,CELL41,Handshake,374.19,3.821,372.11,65.38,68.27,94.98,36.47,33.31,34.89,25.89,4.05,99.34,34.77,TRUE,OK,24.46,94.5,0.839,Alarm,Moisture detected
+9/3/2025 15:20,CH1,CELL27,Parameter_Config,329.34,3.9,326.51,108.49,109.21,73.78,31.05,29.56,30.305,20.68,9.71,95.8,23.38,TRUE,Warning,35.73,90.69,0.663,Warning,Moisture detected
+9/3/2025 15:21,CH5,CELL49,End_Of_Charge,310.31,4.185,312.79,102.43,100.27,7.62,73.21,71.7,72.455,24.72,1.47,90.57,13.25,TRUE,OK,31.79,119.47,0.76,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 15:22,CH4,CELL48,Handshake,382.56,3.909,379.57,68.23,72.23,93.71,42.41,40.28,41.345,27.94,8.05,99.36,15.72,FALSE,OK,26.1,107.21,0.903,Runaway,Critical thermal runaway risk
+9/3/2025 15:23,CH3,CELL37,End_Of_Charge,376.28,3.917,373.49,98.34,102.42,94.61,55.78,51.56,53.67,25.99,10.67,89.17,37.42,FALSE,OK,37,96.97,1,Runaway,Critical thermal runaway risk
+9/3/2025 15:24,CH2,CELL12,End_Of_Charge,342.82,3.869,344.17,74.03,70.41,77.45,51.16,46.69,48.925,23.6,7.61,81.26,26.22,FALSE,OK,25.38,109.33,0.902,Runaway,Critical thermal runaway risk
+9/3/2025 15:25,CH5,CELL13,Parameter_Config,348.62,4.086,349.56,108.78,113.53,55.06,25.27,20.37,22.82,32.61,11.86,81.85,47.63,FALSE,Warning,37.92,111.78,0.521,Warning,Normal operation
+9/3/2025 15:26,CH2,CELL16,Handshake,332.67,3.973,335.24,41.94,42.17,22.32,35.36,32.61,33.985,27.37,7.97,99.16,22.21,FALSE,Warning,13.95,106.5,0.51,Warning,Normal operation
+9/3/2025 15:27,CH4,CELL3,Handshake,364.64,4.12,362.83,14,11.38,18.26,44.34,44.3,44.32,21.13,7.02,99.59,8.32,TRUE,OK,5.1,92.74,0.569,Warning,Moisture detected
+9/3/2025 15:28,CH8,CELL26,Handshake,329.28,4.006,326.3,38.79,35.17,71.27,44.94,43.08,44.01,32.78,4.32,80.47,0.09,TRUE,Critical,12.77,109.52,0.751,Alarm,Moisture detected
+9/3/2025 15:29,CH8,CELL47,Handshake,340.74,4.179,342.82,45.3,48.98,72.6,61.63,60.65,61.14,22.33,8.77,98.3,28.92,TRUE,Warning,15.44,94.38,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 15:30,CH5,CELL37,Parameter_Config,346.82,3.881,347.11,63.97,65.44,57.97,72.13,67.54,69.835,29.41,5.09,86.06,22.07,TRUE,OK,22.19,96.31,0.986,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 15:31,CH10,CELL48,End_Of_Charge,349.23,3.714,345.05,54.78,57.19,13.57,58.25,56.54,57.395,24.53,12.56,98.02,39.74,FALSE,OK,19.13,102.6,0.644,Warning,High internal resistance
+9/3/2025 15:32,CH7,CELL21,Recharge,308.03,3.876,306.76,44.4,41.32,79.62,60.29,60,60.145,28.14,14.78,87.39,23.82,FALSE,Warning,13.68,118.99,0.987,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 15:33,CH5,CELL49,End_Of_Charge,384.56,3.734,382.19,58.54,56.32,23.93,32.68,31.96,32.32,28.14,13,98.71,38.65,FALSE,OK,22.51,106.97,0.452,Warning,High internal resistance
+9/3/2025 15:34,CH9,CELL9,End_Of_Charge,338.82,3.989,339.59,34.08,34,3.98,70.54,67.52,69.03,20.52,2.55,88.29,2.82,FALSE,Warning,11.55,115.78,0.7,Alarm,Rapid temp rise
+9/3/2025 15:35,CH8,CELL13,Handshake,333.63,4.114,330.7,66.6,70.86,79.99,60.76,58.14,59.45,26.29,4.9,91.68,40.93,FALSE,OK,22.22,96.59,0.997,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 15:36,CH2,CELL7,Handshake,394.03,4.035,396.02,75.72,72.29,30.17,62.39,61.43,61.91,32.73,8.79,85.25,41.33,FALSE,OK,29.84,105.18,0.76,Alarm,Rapid temp rise
+9/3/2025 15:37,CH5,CELL38,Handshake,310.24,3.837,308.94,20.02,24.53,25.11,48.26,48.05,48.155,31.22,4.83,93.79,23.65,TRUE,OK,6.21,119.7,0.622,Warning,Moisture detected
+9/3/2025 15:38,CH6,CELL37,End_Of_Charge,370.26,3.922,374.26,93.97,96.81,16.04,63.27,60.04,61.655,28.48,1.06,87.17,41.17,FALSE,Warning,34.79,97.41,0.703,Alarm,Rapid temp rise
+9/3/2025 15:39,CH7,CELL26,Recharge,362.29,4.046,360.06,13.65,11.87,8.19,64.38,61.33,62.855,22.96,13.37,92.68,9.63,TRUE,OK,4.95,110.46,0.656,Warning,Rapid temp rise; High internal resistance; Moisture detected
+9/3/2025 15:40,CH6,CELL7,Recharge,342.33,3.797,339.74,107.05,108.36,66.16,50.84,50.6,50.72,32.54,1.46,81.72,14.11,FALSE,OK,36.65,94.07,0.885,Alarm,Normal operation
+9/3/2025 15:41,CH4,CELL50,Handshake,338.26,3.816,343.04,90.7,94.18,93.57,27.36,23.44,25.4,30.7,3.92,82.1,43.23,TRUE,Warning,30.68,95.97,0.742,Alarm,Moisture detected
+9/3/2025 15:42,CH5,CELL20,Handshake,353.96,4.198,355.88,90.66,92.8,99.08,70.79,66.3,68.545,28.64,13.07,83.48,20.52,FALSE,Critical,32.09,105.63,1,Runaway,Critical thermal runaway risk; Rapid temp rise; High internal resistance
+9/3/2025 15:43,CH10,CELL18,Handshake,382.99,3.794,380.1,80.38,84.06,90.04,66.6,64.9,65.75,29.27,2.75,95.86,26.4,TRUE,OK,30.78,100.86,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 15:44,CH1,CELL4,Recharge,357.83,3.802,355.43,64.8,64.55,6.08,76.41,74.93,75.67,23.71,9.19,85.23,13.69,FALSE,OK,23.19,118.99,0.785,Alarm,Rapid temp rise
+9/3/2025 15:45,CH1,CELL17,Handshake,329.94,4.126,327.62,112.82,117.01,51.82,56.62,55.64,56.13,34.67,13.46,87.71,3.5,TRUE,OK,37.22,118.17,0.841,Alarm,High internal resistance; Moisture detected
+9/3/2025 15:46,CH9,CELL22,Handshake,362.83,3.842,359.84,82.88,80.43,79.19,30.85,26.3,28.575,31.46,10.51,97.33,10.95,FALSE,OK,30.07,93.88,0.738,Alarm,Normal operation
+9/3/2025 15:47,CH3,CELL31,Handshake,376.41,3.692,373.66,70.15,73.54,39.19,52.1,50.06,51.08,29.64,1.37,85.45,5.14,TRUE,OK,26.41,115.02,0.696,Warning,Moisture detected
+9/3/2025 15:48,CH5,CELL36,Parameter_Config,391.74,3.762,388.28,95.7,90.81,28.89,42.21,41.71,41.96,22.73,9.83,97.78,42.95,FALSE,OK,37.49,99.85,0.568,Warning,Normal operation
+9/3/2025 15:49,CH9,CELL15,Recharge,363.29,3.966,367.14,69.66,67.67,92.45,57.83,54.47,56.15,21.54,12.13,81.14,37.14,TRUE,OK,25.31,93.48,1,Runaway,Critical thermal runaway risk; High internal resistance; Moisture detected
+9/3/2025 15:50,CH7,CELL39,Recharge,335.58,3.86,339.26,30.48,31.84,79.57,33.77,31.57,32.67,20.98,14.44,84.45,23.59,TRUE,OK,10.23,110.36,0.764,Alarm,High internal resistance; Moisture detected
+9/3/2025 15:51,CH8,CELL30,Recharge,350.44,3.667,350.47,76.91,77.41,68.34,72.93,70.2,71.565,32.58,6.62,81.16,8.31,TRUE,OK,26.95,111.34,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 15:52,CH3,CELL43,Handshake,305.71,3.776,307.29,116.37,118.55,13.91,65.31,63.34,64.325,31.61,14.34,92.85,49.23,FALSE,OK,35.58,106.61,0.749,Alarm,Rapid temp rise; High internal resistance
+9/3/2025 15:53,CH10,CELL13,Parameter_Config,301.91,3.902,296.94,45.18,43.77,97.65,52.08,50.99,51.535,30.42,11.56,87.17,44.88,TRUE,Warning,13.64,98.8,1,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 15:54,CH7,CELL45,Parameter_Config,323.11,3.745,319.98,79.36,81,29.66,48.53,47.14,47.835,34.04,2.23,99.13,5.81,TRUE,OK,25.64,100.25,0.618,Warning,Moisture detected
+9/3/2025 15:55,CH5,CELL3,Recharge,389.42,3.945,392.79,52.18,54.58,0.17,45.17,41.07,43.12,24.17,3.07,99.93,28.94,TRUE,OK,20.32,116.65,0.456,Warning,Moisture detected
+9/3/2025 15:56,CH2,CELL26,End_Of_Charge,303.87,3.959,306.51,57.08,58.06,66.74,64.9,61.8,63.35,23.8,4.12,92.98,16.86,TRUE,OK,17.34,98.02,0.978,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 15:57,CH9,CELL31,End_Of_Charge,358.45,3.902,354.98,5.57,3.07,26.96,71.62,71.07,71.345,23.79,8.26,81.84,22.62,TRUE,OK,2,109.76,0.836,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 15:58,CH6,CELL40,Recharge,356.07,4.039,359.31,61.88,64.45,16.36,43.81,42.39,43.1,29.95,5.51,94.81,1.73,TRUE,Warning,22.03,118.72,0.526,Warning,Moisture detected
+9/3/2025 15:59,CH9,CELL44,Handshake,395.53,3.905,394.87,95.3,98.65,41.86,42.58,39.92,41.25,21.1,12.67,98.94,35.57,FALSE,Warning,37.69,115.98,0.638,Warning,High internal resistance
+9/3/2025 16:00,CH7,CELL4,Recharge,306.46,3.722,309.22,97.22,95.49,16.24,65.31,63.85,64.58,34.93,10.97,81.24,15.5,TRUE,OK,29.79,95.17,0.729,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 16:01,CH5,CELL37,Parameter_Config,347.27,4.07,343.61,43.43,45.74,40.28,64.73,61.4,63.065,28.08,11.72,81.76,38.08,FALSE,OK,15.08,90.39,0.855,Alarm,Rapid temp rise
+9/3/2025 16:02,CH9,CELL32,Handshake,323.02,3.778,326.03,110.91,112.8,20.55,66.86,64.16,65.51,32.39,3.97,95.67,20.26,FALSE,Critical,35.83,102.01,0.767,Alarm,Rapid temp rise
+9/3/2025 16:03,CH5,CELL44,Handshake,390.13,3.714,388.35,45.07,42.08,98.14,63.51,62,62.755,30.34,8.07,98.18,24.33,TRUE,OK,17.58,113.29,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 16:04,CH9,CELL24,Recharge,343.63,4.113,347.22,33.59,33.99,43.53,67.05,65.5,66.275,33.29,4.15,84.24,5.51,FALSE,OK,11.54,108.32,0.855,Alarm,Rapid temp rise
+9/3/2025 16:05,CH1,CELL14,Handshake,317.2,4.19,319.86,58.49,56.23,92.2,69.08,64.31,66.695,26.18,4.59,94.68,4.6,FALSE,OK,18.55,119.75,1,Runaway,Critical thermal runaway risk; Rapid temp rise
+9/3/2025 16:06,CH2,CELL12,Recharge,360.71,3.903,357.97,52.38,54.25,4.7,39.98,39.68,39.83,33.12,9.52,98.38,3.21,FALSE,OK,18.89,90.26,0.452,Warning,Normal operation
+9/3/2025 16:07,CH5,CELL45,Handshake,361.22,3.709,356.9,83.33,85.04,20.73,51.75,48.48,50.115,25.36,4.59,95.43,23.76,FALSE,OK,30.1,106.58,0.603,Warning,Normal operation
+9/3/2025 16:08,CH4,CELL9,Recharge,390.78,3.965,393.6,110.08,110.9,77.62,59.03,55.57,57.3,31.97,6.42,88.28,40.99,TRUE,Warning,43.02,110.17,1,Runaway,Critical thermal runaway risk; Moisture detected
+9/3/2025 16:09,CH4,CELL45,Recharge,324.86,3.651,328.08,96.44,94.4,75.03,61.25,61.1,61.175,22.27,7.24,96.04,4.39,TRUE,OK,31.33,112.69,0.976,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 16:10,CH2,CELL23,End_Of_Charge,345.53,4.028,345.35,90.14,89.36,60.53,50.37,47.16,48.765,34.24,5.1,85.42,40.59,TRUE,OK,31.15,109.17,0.793,Alarm,Moisture detected
+9/3/2025 16:11,CH10,CELL38,Parameter_Config,386.25,4.095,386.14,107.8,105.34,2.31,70.58,67.43,69.005,26.32,7.71,82.29,44,FALSE,OK,41.64,104.66,0.712,Alarm,Rapid temp rise
+9/3/2025 16:12,CH4,CELL36,Recharge,335.9,3.634,331.29,2.8,3.43,56.41,58.35,55.5,56.925,22.19,14.41,94.07,10.14,TRUE,OK,0.94,95.23,0.838,Alarm,High internal resistance; Moisture detected
+9/3/2025 16:13,CH7,CELL12,Recharge,313.04,3.781,311.62,61.04,60.45,10.97,31.88,31.55,31.715,32.21,5.65,82.96,47.5,TRUE,Critical,19.11,95.68,0.367,Watch,Moisture detected
+9/3/2025 16:14,CH10,CELL45,Recharge,322.44,3.893,325.02,26.98,25.26,27.54,61.72,57.81,59.765,28.12,8.26,89.88,8.77,TRUE,OK,8.7,119.89,0.75,Alarm,Rapid temp rise; Moisture detected
+9/3/2025 16:15,CH9,CELL18,Handshake,316.06,3.954,311.52,23.02,23.83,54.9,37.87,35.84,36.855,33.5,6.61,81.61,1.32,TRUE,OK,7.28,111.18,0.641,Warning,Moisture detected
+9/3/2025 16:16,CH1,CELL13,Handshake,364.97,3.778,361.09,112.57,111.63,19.11,33.24,28.8,31.02,23.08,12.93,84.58,4.13,FALSE,Critical,41.08,90.17,0.412,Warning,High internal resistance
+9/3/2025 16:17,CH1,CELL28,Recharge,348.76,3.671,351.8,57.15,54.76,13.97,28.36,27.45,27.905,31.23,5.19,85.13,10.66,FALSE,OK,19.93,110.23,0.355,Watch,Normal operation
+9/3/2025 16:18,CH4,CELL3,Parameter_Config,334.24,4.103,335.23,83.04,85.13,64.44,73.95,73.38,73.665,28.11,3.18,99.96,45.17,TRUE,OK,27.76,107.8,1,Runaway,Critical thermal runaway risk; Rapid temp rise; Moisture detected
+9/3/2025 16:19,CH2,CELL50,Parameter_Config,367.27,3.785,372.19,112.75,116.03,97.64,65.38,61.49,63.435,34.7,2.76,93.76,0.76,FALSE,Warning,41.41,91.96,1,Runaway,Critical thermal runaway risk; Rapid temp rise
