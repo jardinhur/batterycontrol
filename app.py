@@ -6,10 +6,16 @@ from dotenv import load_dotenv
 import requests, joblib
 
 load_dotenv()
+try:
+    for k, v in st.secrets.items():
+        if isinstance(v, str):
+            os.environ.setdefault(k, v)
+except Exception:
+    pass
+
 st.set_page_config(page_title="Battery Sentinel 3.0", layout="wide")
 LOG_PATH = "control_log.csv"
 
-# 시험: 20% → 약 32°C. 열폭주 시연용 상한 30%
 HW_MAX_PWM = 30.0
 T_CUTOFF = 45.0
 RISE_CUTOFF = 5.0
@@ -18,7 +24,6 @@ RISE_WARN = 0.3
 SENSOR_FAIL = -100
 
 def to_hw_pwm(logical_pct):
-    """화면 0~100% → 실제 히터 0~30%"""
     return float(np.clip(logical_pct / 100.0 * HW_MAX_PWM, 0, HW_MAX_PWM))
 
 def pct_cmd(pct):
@@ -26,6 +31,13 @@ def pct_cmd(pct):
     if pct >= 95:
         return "f"
     return str(max(0, min(9, pct // 10)))
+
+def charge_level(power):
+    if power >= 85: return 4
+    if power >= 60: return 3
+    if power >= 30: return 2
+    if power > 1: return 1
+    return 0
 
 @st.cache_resource
 def init_model():
@@ -93,7 +105,7 @@ def ask_brief(s, timeline):
         return "AI 설정 없음"
     hist = " | ".join(f"{x['time']} {x['status']} {x['reason']}" for x in timeline[-4:]) or "없음"
     p = f"""4줄. 1)위험 2)Isolation Forest 해석 3)전원 조절 이유 4)차단 가능성
-충전={s['Power']:.0f}% 실제PWM={s.get('HW',0):.0f}% Tmax={s['T_max']:.1f} ΔT={s['Delta_T']:.2f} R={s['R_est']:.2f} 점수={s['AI_Score']:.1f} 상태={s['Status']} 이유={s.get('Reason','')} 최근={hist}
+충전={s['Power']:.0f}% 단계={s.get('Level',0)} 실제PWM={s.get('HW',0):.0f}% Tmax={s['T_max']:.1f} ΔT={s['Delta_T']:.2f} R={s['R_est']:.2f} 점수={s['AI_Score']:.1f} 상태={s['Status']} 이유={s.get('Reason','')} 최근={hist}
 이전 호출은 기억하지 않는다."""
     try:
         r = c.chat.completions.create(model=os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-4o-mini"),
@@ -126,16 +138,17 @@ def send_tg(msg):
             pass
 
 for k, v in {
-    "hist": pd.DataFrame(columns=["Time","T1","T2","T3","Delta_T","V","I","R","Score","Power","H1","H2","HW","Relay","State"]),
+    "hist": pd.DataFrame(columns=["Time","T1","T2","T3","Delta_T","V","I","R","Score","Power","Level","H1","H2","HW","Relay","State"]),
     "sim": [26.0, 26.1, 26.0], "report": "대기", "decision": None,
     "serA": None, "serB": None, "last_ai": 0, "last_brief": 0, "last_status": "",
-    "last_alert": 0, "latched": False, "timeline": [], "last_cmd": "",
+    "last_alert": 0, "latched": False, "timeline": [], "last_cmdA": "", "last_cmdB": "",
 }.items():
     if k not in st.session_state:
         st.session_state[k] = v
 
 st.sidebar.title("제어판")
-st.sidebar.caption(f"모델: {model_source} | 히터 상한 {HW_MAX_PWM:.0f}%")
+st.sidebar.caption(f"모델: {model_source} | PWM 상한 {HW_MAX_PWM:.0f}%")
+st.sidebar.caption("B: 1~4/w/a/c/x/s/p/r  |  A: h/j/x")
 mode = st.sidebar.radio("모드", ["시뮬레이션", "하드웨어"])
 ports = [p.device for p in serial.tools.list_ports.comports()]
 if mode == "하드웨어":
@@ -170,21 +183,28 @@ def sendA(hw1, hw2, force_off=False):
     if not (st.session_state.serA and st.session_state.serA.is_open):
         return
     try:
-        if force_off or (hw1 <= 1 and hw2 <= 1):
-            cmd = "x"
-        else:
-            cmd = "h" + pct_cmd(hw1) + "j" + pct_cmd(hw2)
-        if cmd != st.session_state.last_cmd:
+        cmd = "x" if force_off or (hw1 <= 1 and hw2 <= 1) else "h" + pct_cmd(hw1) + "j" + pct_cmd(hw2)
+        if cmd != st.session_state.last_cmdA:
             st.session_state.serA.write(cmd.encode())
-            st.session_state.last_cmd = cmd
+            st.session_state.last_cmdA = cmd
     except Exception:
         pass
 
-def sendB(on: bool):
+def sendB(power, blocked=False, warn=False, ai_block=False):
+    """B: 1~4 충전단계, w 경고, a AI차단, c/x 릴레이, s/p LED"""
     if not (st.session_state.serB and st.session_state.serB.is_open):
         return
     try:
-        st.session_state.serB.write(b"sc" if on else b"px")
+        if blocked:
+            cmd = "pxa" if ai_block else "px"
+        else:
+            lv = charge_level(power)
+            cmd = "p" if lv == 0 else f"s{lv}c"
+            if warn:
+                cmd += "w"
+        if cmd != st.session_state.last_cmdB:
+            st.session_state.serB.write(cmd.encode())
+            st.session_state.last_cmdB = cmd
     except Exception:
         pass
 
@@ -212,9 +232,8 @@ def step():
     if mode == "시뮬레이션":
         t1, t2, t3 = st.session_state.sim
         amb = 25.5
-        # 시뮬도 30% 상한에 맞춰 발열
         hw_now = to_hw_pwm(p_power)
-        i_cmd = 1.5 * (hw_now / HW_MAX_PWM)
+        i_cmd = 1.5 * (hw_now / HW_MAX_PWM) if HW_MAX_PWM else 0
         r = 1.20 if scen.startswith("B") else 0.65 if scen.startswith("C") else 0.50
         p_heat = (i_cmd ** 2) * r * HEAT_GAIN
         def ut(t, extra=0.0):
@@ -277,29 +296,30 @@ def step():
     reason = " / ".join(reasons)
     alpha = 0.25
     power = 0.0 if st.session_state.latched else float(np.clip(p_power * (1 - alpha) + power * alpha, 0, 100))
-
-    # 논리 충전% → 실제 PWM (최대 30%)
+    level = 0 if st.session_state.latched else charge_level(power)
     hw = 0.0 if st.session_state.latched else to_hw_pwm(power)
     h1 = hw * 0.85
     h2 = min(HW_MAX_PWM, hw * 0.5) if (scen.startswith("C") and not st.session_state.latched and power > 15) else 0.0
+    ai_block = st.session_state.latched and ("AI" in reason or kind == "hard")
 
     sendA(h1, h2, force_off=st.session_state.latched)
-    sendB(on=not st.session_state.latched and power > 1)
+    sendB(power, blocked=st.session_state.latched, warn=(kind == "warn"), ai_block=ai_block)
 
     if st.session_state.latched and time.time() - st.session_state.last_alert > 25:
         send_tg(f"차단 {reason}")
         st.session_state.last_alert = time.time()
     if int(time.time()) % 2 == 0:
         append_log({"time": time.strftime("%H:%M:%S"), "T_max": round(float(tmax), 2),
-                    "Power": round(power, 1), "HW": round(hw, 1), "status": status, "reason": reason})
+                    "Power": round(power, 1), "Level": level, "HW": round(hw, 1),
+                    "status": status, "reason": reason})
 
     st.session_state.hist = pd.concat([st.session_state.hist, pd.DataFrame([{
         "Time": time.strftime("%H:%M:%S"), "T1": t1, "T2": t2, "T3": t3, "Delta_T": dtv,
-        "V": v, "I": i, "R": r, "Score": score, "Power": power, "H1": h1, "H2": h2,
-        "HW": hw, "Relay": int(not st.session_state.latched), "State": b_state
+        "V": v, "I": i, "R": r, "Score": score, "Power": power, "Level": level,
+        "H1": h1, "H2": h2, "HW": hw, "Relay": int(not st.session_state.latched), "State": b_state
     }])], ignore_index=True).tail(90)
     return {"T_max": tmax, "Delta_T": dtv, "R_est": r, "AI_Score": score, "Status": status,
-            "Power": power, "H1": h1, "H2": h2, "HW": hw, "Reason": reason}
+            "Power": power, "H1": h1, "H2": h2, "HW": hw, "Level": level, "Reason": reason}
 
 if run or len(st.session_state.hist) == 0:
     latest = step()
@@ -307,7 +327,7 @@ else:
     h = st.session_state.hist.iloc[-1]
     latest = {"T_max": max(h.T1, h.T2, h.T3), "Delta_T": h.Delta_T, "R_est": h.R,
               "AI_Score": h.Score, "Status": "일시정지", "Power": h.Power,
-              "H1": h.H1, "H2": h.H2, "HW": h.HW, "Reason": ""}
+              "H1": h.H1, "H2": h.H2, "HW": h.HW, "Level": h.Level, "Reason": ""}
 
 if run:
     interval = 20 if mode == "시뮬레이션" else 80
@@ -325,7 +345,7 @@ if run and ai_auto and not st.session_state.latched and latest["AI_Score"] >= 18
     st.session_state.last_ai = time.time()
 
 st.title("🛡️ Battery Sentinel 3.0")
-st.caption(f"화면 충전 0~100%  →  실제 히터 PWM 0~{HW_MAX_PWM:.0f}%")
+st.caption("B: 충전단계 1~4 · w 경고 · a AI차단  |  실제 PWM 최대 30%")
 if "차단" in latest["Status"]:
     st.error(latest["Status"])
 elif "⚠️" in latest["Status"] or "저속" in latest["Status"] or "제한" in latest["Status"]:
@@ -336,10 +356,10 @@ else:
 c = st.columns(6)
 c[0].metric("위험도", f"{latest['AI_Score']:.1f}%")
 c[1].metric("충전", f"{latest['Power']:.0f}%")
-c[2].metric("실제 PWM", f"{latest.get('HW', 0):.0f}%")
-c[3].metric("Tmax", f"{latest['T_max']:.1f}°C")
-c[4].metric("ΔT", f"{latest['Delta_T']:.2f}°C")
-c[5].metric("H1/H2", f"{latest['H1']:.0f}/{latest['H2']:.0f}")
+c[2].metric("LED 단계", f"{latest.get('Level', 0)}/4")
+c[3].metric("실제 PWM", f"{latest.get('HW', 0):.0f}%")
+c[4].metric("Tmax", f"{latest['T_max']:.1f}°C")
+c[5].metric("ΔT", f"{latest['Delta_T']:.2f}°C")
 st.caption(f"판정: {latest.get('Reason','')}")
 
 g1, g2 = st.columns(2)
@@ -364,10 +384,11 @@ for ev in reversed(st.session_state.timeline[-8:]):
     st.write(f"`{ev['time']}` {ev['status']} · {ev['power']:.0f}% · {ev['reason']}")
 if st.session_state.decision:
     st.write("**AI 의사결정**", st.session_state.decision)
-with st.expander("히터 상한"):
-    st.write(f"충전 100% → 실제 PWM **{HW_MAX_PWM:.0f}%**")
-    st.write("충전 50% → 실제 PWM **15%**")
-    st.write("A 명령 예: 충전 100%일 때 `h2` 또는 `h3` (20~30%)")
+with st.expander("프로토콜"):
+    st.write("충전 100% → B에 `s4c`, A에 최대 30% (`h3` 근처)")
+    st.write("경고 → `w` (LCD CAUTION 3초)")
+    st.write("AI/하드 차단 → `pxa` (LED OFF, K1 OFF, CAUSE: AI ANOMALY)")
+    st.write("팽창은 나중에 `k`")
 if run:
     time.sleep(1)
     st.rerun()
