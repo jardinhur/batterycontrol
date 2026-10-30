@@ -28,6 +28,7 @@ STALE_LIMIT = 10
 I_FULL = 1.50
 SOC_PER_A = 0.08
 SCORE_ALERT = 80.0
+CAM_TH = 0.60
 
 def to_hw_pwm(logical_pct):
     return float(np.clip(logical_pct / 100.0 * HW_MAX_PWM, 0, HW_MAX_PWM))
@@ -65,7 +66,9 @@ def status_from_power(power, warn=False):
     base = "⚡ 고속 충전" if power >= 85 else "🔶 저속 충전" if power >= 50 else "⚠️ 제한 충전" if power > 1 else "⏸️ 대기"
     return ("⚠️ " + base) if warn and power > 1 else base
 
-def decide(score, margin, dtv, rise10, r, sensor_ok, b_state):
+def decide(score, margin, dtv, rise10, r, sensor_ok, b_state, cam_bad):
+    if cam_bad:
+        return 0.0, "hard", ["영상 팽창"]
     if b_state == "BLOCKED":
         return 0.0, "hard", ["B보드 BLOCKED"]
     if not sensor_ok:
@@ -111,7 +114,7 @@ def ask_brief(s, timeline):
         return "AI 설정 없음"
     hist = " | ".join(f"{x['time']} {x['status']} {x['reason']}" for x in timeline[-4:]) or "없음"
     p = f"""4줄. 1)위험 2)Isolation Forest 해석 3)충전을 왜 조절했는지 4)차단 가능성
-충전량={s.get('SoC',0):.1f}% 속도={s['Power']:.0f}% 전류={s.get('I_meas',0):.2f}A Tmax={s['T_max']:.1f} 주변대비={s.get('Margin',0):+.1f} 10초={s.get('Rise10',0):.2f} 점수={s['AI_Score']:.1f} 상태={s['Status']} 이유={s.get('Reason','')} 최근={hist}
+충전량={s.get('SoC',0):.1f}% 속도={s['Power']:.0f}% 전류={s.get('I_meas',0):.2f}A Tmax={s['T_max']:.1f} 주변대비={s.get('Margin',0):+.1f} 점수={s['AI_Score']:.1f} 영상={s.get('Cam','-')} 상태={s['Status']} 이유={s.get('Reason','')} 최근={hist}
 이전 호출은 기억하지 않는다."""
     try:
         r = c.chat.completions.create(model=os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-4o-mini"),
@@ -144,9 +147,11 @@ def send_tg(msg):
             pass
 
 for k, v in {
-    "hist": pd.DataFrame(columns=["Time","T1","T2","T3","Delta_T","Score","Power","SoC","Ich","State","Amb","Rise10"]),
+    "hist": pd.DataFrame(columns=["Time","T1","T2","T3","Delta_T","Score","Power","SoC","Ich","Cam","State","Amb","Rise10"]),
     "sim": [26.0, 26.1, 26.0], "soc": 20.0, "report": "대기", "decision": None,
-    "serA": None, "serB": None, "last_ai": 0, "last_brief": 0, "last_status": "",
+    "serA": None, "serB": None, "serC": None,
+    "cam": {"time": "-", "tag": "대기", "prob": 0.0},
+    "last_ai": 0, "last_brief": 0, "last_status": "",
     "last_alert": 0, "last_score_alert": 0, "latched": False, "timeline": [],
     "last_cmdA": "", "last_cmdB": "", "ambient": None, "last_b": None, "stale": 0,
 }.items():
@@ -155,7 +160,7 @@ for k, v in {
 
 st.sidebar.title("제어판")
 st.sidebar.caption(f"모델: {model_source}")
-st.sidebar.caption("필수: B  |  선택: A (히터)")
+st.sidebar.caption("필수: B  |  선택: A, CAM")
 mode = st.sidebar.radio("모드", ["시뮬레이션", "하드웨어"])
 ports = [p.device for p in serial.tools.list_ports.comports()]
 amb_manual = 0.0
@@ -163,6 +168,7 @@ if mode == "하드웨어":
     st.sidebar.caption("USB는 이 PC에서만 동작합니다.")
     pa = st.sidebar.selectbox("ESP32 A (히터, 선택)", ["연결 안 함"] + (ports or []))
     pb = st.sidebar.selectbox("ESP32 B (센서·LCD)", ports or ["COM4"])
+    pc = st.sidebar.selectbox("ESP32-CAM", ["연결 안 함"] + (ports or []))
     if st.sidebar.button("A 연결") and pa != "연결 안 함":
         try:
             if st.session_state.serA: st.session_state.serA.close()
@@ -180,6 +186,13 @@ if mode == "하드웨어":
             st.sidebar.success("B 연결")
         except Exception as e:
             st.sidebar.error(str(e))
+    if st.sidebar.button("CAM 연결") and pc != "연결 안 함":
+        try:
+            if st.session_state.serC: st.session_state.serC.close()
+            st.session_state.serC = serial.Serial(pc, 115200, timeout=0.2)
+            st.sidebar.success("CAM 연결")
+        except Exception as e:
+            st.sidebar.error(str(e))
     if st.sidebar.button("B 기준선 다시 (z)"):
         st.session_state.ambient = None
         if st.session_state.serB and st.session_state.serB.is_open:
@@ -188,6 +201,7 @@ if mode == "하드웨어":
     amb_manual = st.sidebar.number_input("주변온도 수동 (0=자동)", 0.0, 50.0, 0.0, 0.5)
 
 scen = st.sidebar.selectbox("시나리오", ["A.정상", "B.저항↑", "C.HotSpot", "D.센서실패"])
+cam_demo = st.sidebar.selectbox("영상 시연", ["자동(CAM)", "normal", "swelling"])
 local_ai = st.sidebar.toggle("로컬 AI 감속", True)
 ai_auto = st.sidebar.toggle("AI 자동분석", True)
 ai_ctrl = st.sidebar.toggle("AI 제어반영", False)
@@ -212,11 +226,13 @@ def sendA(h1, h2, force_off=False):
     except Exception:
         pass
 
-def sendB(power, blocked=False, warn=False, ai_block=False):
+def sendB(power, blocked=False, warn=False, ai_block=False, swelling=False):
     if not (st.session_state.serB and st.session_state.serB.is_open):
         return
     try:
-        if blocked:
+        if swelling:
+            cmd = "k"
+        elif blocked:
             cmd = "pxa" if ai_block else "px"
         else:
             lv = charge_level(power)
@@ -272,13 +288,42 @@ def read_b(ser):
             last = d
     return last
 
+def parse_cam_line(line):
+    line = line.strip()
+    if not line.upper().startswith("CAM"):
+        return None
+    p = line.split(",")
+    if len(p) < 3:
+        return None
+    try:
+        prob = float(p[2])
+    except Exception:
+        prob = 0.0
+    return {"time": time.strftime("%H:%M:%S"), "tag": p[1].strip().lower(), "prob": prob}
+
+def read_cam():
+    if cam_demo == "swelling":
+        return {"time": time.strftime("%H:%M:%S"), "tag": "swelling", "prob": 0.92}
+    if cam_demo == "normal":
+        return {"time": time.strftime("%H:%M:%S"), "tag": "normal", "prob": 0.88}
+    if st.session_state.serC and st.session_state.serC.is_open:
+        try:
+            raw = st.session_state.serC.readline().decode(errors="ignore").strip()
+            got = parse_cam_line(raw)
+            if got:
+                return got
+        except Exception:
+            pass
+    return st.session_state.cam
+
 def no_data(status, reason):
     sendA(0, 0, force_off=True)
     sendB(0.0)
+    cam = st.session_state.cam
     return {"T_max": float("nan"), "Delta_T": 0.0, "R_est": 0.5, "AI_Score": 0.0,
             "Status": status, "Power": 0.0, "SoC": st.session_state.soc, "I_meas": 0.0,
             "Reason": reason, "Margin": float("nan"), "Rise10": 0.0, "Ambient": float("nan"),
-            "NoData": True}
+            "Cam": f"{cam['tag']} {cam['prob']:.0%}", "NoData": True}
 
 def step():
     prev = st.session_state.hist.iloc[-1] if len(st.session_state.hist) else None
@@ -333,6 +378,10 @@ def step():
             b_state = data["state"]
             r = (v / i_meas) if i_meas > 0.05 else 0.5
 
+    cam = read_cam()
+    st.session_state.cam = cam
+    cam_bad = cam["tag"] == "swelling" and cam["prob"] >= CAM_TH
+
     temps = [t1, t2, t3]
     sensor_ok = all(np.isfinite(t) and t > SENSOR_FAIL for t in temps)
     tmax = max(temps) if sensor_ok else -127
@@ -342,13 +391,13 @@ def step():
     raw = float(iso.decision_function([[25 if not sensor_ok else tmax, dtv, dtdt, r]])[0])
     score = float(np.clip((0.05 - raw) * 180, 0, 100))
 
-    if st.session_state.latched or b_state == "BLOCKED":
-        if b_state == "BLOCKED":
+    if st.session_state.latched or b_state == "BLOCKED" or cam_bad:
+        if b_state == "BLOCKED" or cam_bad:
             st.session_state.latched = True
-        power, kind, reasons = 0.0, "hard", ["차단 유지"]
+        power, kind, reasons = 0.0, "hard", ["영상 팽창"] if cam_bad else ["차단 유지"]
         status = "🛑 충전 차단"
     else:
-        power, kind, reasons = decide(score, margin, dtv, rise10, r, sensor_ok, b_state) if local_ai else (100.0, "ok", ["수동"])
+        power, kind, reasons = decide(score, margin, dtv, rise10, r, sensor_ok, b_state, cam_bad) if local_ai else (100.0, "ok", ["수동"])
         if kind == "hard":
             power = 0.0
             st.session_state.latched = True
@@ -378,7 +427,8 @@ def step():
     h1 = 0.0 if st.session_state.latched else float(fault_pct)
     h2 = 0.5 * h1 if scen.startswith("C") else 0.0
     sendA(h1, h2, force_off=st.session_state.latched)
-    sendB(power, blocked=st.session_state.latched, warn=(kind == "warn"), ai_block=("AI" in reason))
+    sendB(power, blocked=st.session_state.latched, warn=(kind == "warn"),
+           ai_block=("AI" in reason), swelling=cam_bad)
 
     now = time.time()
     if st.session_state.latched and now - st.session_state.last_alert > 25:
@@ -391,16 +441,18 @@ def step():
     if int(time.time()) % 2 == 0:
         append_log({"time": time.strftime("%H:%M:%S"), "T_max": round(float(tmax), 2),
                     "soc": round(soc, 1), "i": round(i_meas, 3), "speed": round(power, 1),
-                    "score": round(score, 1), "status": status, "reason": reason})
+                    "score": round(score, 1), "cam": cam["tag"], "status": status, "reason": reason})
 
     st.session_state.hist = pd.concat([st.session_state.hist, pd.DataFrame([{
         "Time": time.strftime("%H:%M:%S"), "T1": t1, "T2": t2, "T3": t3, "Delta_T": dtv,
-        "Score": score, "Power": power, "SoC": soc, "Ich": i_meas, "State": b_state,
+        "Score": score, "Power": power, "SoC": soc, "Ich": i_meas,
+        "Cam": f"{cam['tag']} {cam['prob']:.0%}", "State": b_state,
         "Amb": ambient, "Rise10": rise10
     }])], ignore_index=True).tail(90)
     return {"T_max": tmax, "Delta_T": dtv, "R_est": r, "AI_Score": score, "Status": status,
             "Power": power, "SoC": soc, "I_meas": i_meas, "Reason": reason,
-            "Margin": margin, "Rise10": rise10, "Ambient": ambient}
+            "Margin": margin, "Rise10": rise10, "Ambient": ambient,
+            "Cam": f"{cam['tag']} {cam['prob']:.0%}"}
 
 def fmt_c(x, signed=False):
     if x is None or not np.isfinite(x):
@@ -412,10 +464,11 @@ if run or len(st.session_state.hist) == 0:
 else:
     h = st.session_state.hist.iloc[-1]
     tm = max(h.T1, h.T2, h.T3)
+    cam = st.session_state.cam
     latest = {"T_max": tm, "Delta_T": h.Delta_T, "R_est": 0.5, "AI_Score": h.Score,
               "Status": "일시정지", "Power": h.Power, "SoC": h.SoC, "I_meas": h.Ich,
               "Reason": "", "Margin": tm - h.Amb if np.isfinite(h.Amb) else float("nan"),
-              "Rise10": h.Rise10, "Ambient": h.Amb}
+              "Rise10": h.Rise10, "Ambient": h.Amb, "Cam": f"{cam['tag']} {cam['prob']:.0%}"}
 
 if run:
     interval = 20 if mode == "시뮬레이션" else 80
@@ -435,7 +488,7 @@ if run and ai_auto and not latest.get("NoData") and not st.session_state.latched
     st.session_state.last_ai = time.time()
 
 st.title("🛡️ Battery Sentinel")
-st.caption("AI·온도가 충전 속도를 정함  ·  텔레그램: 차단 또는 AI 80% 이상")
+st.caption("AI·온도·영상 팽창으로 충전을 조절하거나 차단")
 stt = latest["Status"]
 if "차단" in stt:
     st.error(stt)
@@ -446,12 +499,13 @@ elif "⚠️" in stt or "저속" in stt or "제한" in stt:
 else:
     st.success(stt)
 
-c = st.columns(5)
+c = st.columns(6)
 c[0].metric("충전량", f"{latest.get('SoC', 0):.1f}%")
 c[1].metric("충전 속도", f"{latest['Power']:.0f}%")
 c[2].metric("전류 (INA219)", f"{latest.get('I_meas', 0):.2f} A")
 c[3].metric("최고 온도", fmt_c(latest["T_max"]), delta=f"주변 {fmt_c(latest.get('Margin'), True)}", delta_color="off")
 c[4].metric("AI 위험도", f"{latest['AI_Score']:.1f}%")
+c[5].metric("영상 판정", latest.get("Cam", "-"))
 st.caption(f"판단: {latest.get('Reason','')}  |  10초 상승 {latest.get('Rise10', 0):.2f}°C  |  주변 {fmt_c(latest.get('Ambient'))}")
 st.progress(min(1.0, latest.get("SoC", 0) / 100.0))
 
@@ -476,7 +530,6 @@ for ev in reversed(st.session_state.timeline[-8:]):
     st.write(f"`{ev['time']}` {ev['status']} · {ev['power']:.0f}% · {ev['reason']}")
 if st.session_state.decision:
     st.write("**AI 의사결정**", st.session_state.decision)
-    
 if run:
     time.sleep(1)
     st.rerun()
