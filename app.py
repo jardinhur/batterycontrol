@@ -17,7 +17,7 @@ st.set_page_config(page_title="Battery Sentinel 3.0", layout="wide")
 LOG_PATH = "control_log.csv"
 
 HW_MAX_PWM = 30.0
-T_ABS_CUTOFF = 32.0
+T_ABS_CUTOFF = 28.0
 MARGIN_HOTSPOT = 3.0
 MARGIN_SLOW = 1.5
 RISE_CUTOFF = 1.0
