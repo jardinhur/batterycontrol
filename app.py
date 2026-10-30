@@ -17,7 +17,8 @@ st.set_page_config(page_title="Battery Sentinel 3.0", layout="wide")
 LOG_PATH = "control_log.csv"
 
 HW_MAX_PWM = 30.0
-MARGIN_CUTOFF = 3.0
+T_ABS_CUTOFF = 32.0      # 절대온도 32°C 초과 시 차단
+MARGIN_HOTSPOT = 3.0     # HotSpot: 주변 +3°C 이상 시 차단
 MARGIN_SLOW = 1.5
 RISE_CUTOFF = 1.0
 RISE_WARN = 0.5
@@ -66,15 +67,17 @@ def status_from_power(power, warn=False):
     base = "⚡ 고속 충전" if power >= 85 else "🔶 저속 충전" if power >= 50 else "⚠️ 제한 충전" if power > 1 else "⏸️ 대기"
     return ("⚠️ " + base) if warn and power > 1 else base
 
-def decide(score, margin, dtv, rise10, r, sensor_ok, b_state, cam_bad):
+def decide(score, tmax, margin, dtv, rise10, r, sensor_ok, b_state, cam_bad, hotspot):
     if cam_bad:
         return 0.0, "hard", ["영상 팽창"]
     if b_state == "BLOCKED":
         return 0.0, "hard", ["B보드 BLOCKED"]
     if not sensor_ok:
         return 0.0, "hard", ["센서 읽기 실패"]
-    if margin >= MARGIN_CUTOFF:
-        return 0.0, "hard", [f"주변 대비 +{margin:.1f}°C"]
+    if tmax > T_ABS_CUTOFF:
+        return 0.0, "hard", [f"절대온도 {tmax:.1f}> {T_ABS_CUTOFF:.0f}"]
+    if hotspot and margin >= MARGIN_HOTSPOT:
+        return 0.0, "hard", [f"HotSpot 주변+{margin:.1f}°C"]
     if rise10 >= RISE_CUTOFF:
         return 0.0, "hard", [f"10초 상승 {rise10:.1f}°C"]
     if dtv >= DEV_CUTOFF:
@@ -86,7 +89,7 @@ def decide(score, margin, dtv, rise10, r, sensor_ok, b_state, cam_bad):
     if dtv >= DEV_WARN:
         kind = "warn"
         reasons.append(f"편차 경고 {dtv:.1f}°C")
-    tf = 1.0 if margin <= MARGIN_SLOW else max(0.15, 1.0 - (margin - MARGIN_SLOW) / (MARGIN_CUTOFF - MARGIN_SLOW))
+    tf = 1.0 if margin <= MARGIN_SLOW else max(0.15, 1.0 - (margin - MARGIN_SLOW) / max(0.1, T_ABS_CUTOFF - SIM_AMBIENT))
     sf = 1.0 if score <= 15 else 0.25 if score >= 50 else 1.0 - (score - 15) / 35 * 0.6
     rf = 1.0 if r <= 0.85 else max(0.3, 1.0 - (r - 0.85) * 0.5)
     power = float(np.clip(100 * min(tf, sf, rf), 0, 100))
@@ -114,7 +117,7 @@ def ask_brief(s, timeline):
         return "AI 설정 없음"
     hist = " | ".join(f"{x['time']} {x['status']} {x['reason']}" for x in timeline[-4:]) or "없음"
     p = f"""4줄. 1)위험 2)Isolation Forest 해석 3)충전을 왜 조절했는지 4)차단 가능성
-충전량={s.get('SoC',0):.1f}% 속도={s['Power']:.0f}% 전류={s.get('I_meas',0):.2f}A Tmax={s['T_max']:.1f} 주변대비={s.get('Margin',0):+.1f} 점수={s['AI_Score']:.1f} 영상={s.get('Cam','-')} 상태={s['Status']} 이유={s.get('Reason','')} 최근={hist}
+충전량={s.get('SoC',0):.1f}% 속도={s['Power']:.0f}% Tmax={s['T_max']:.1f} 주변대비={s.get('Margin',0):+.1f} 점수={s['AI_Score']:.1f} 영상={s.get('Cam','-')} 상태={s['Status']} 이유={s.get('Reason','')} 최근={hist}
 이전 호출은 기억하지 않는다."""
     try:
         r = c.chat.completions.create(model=os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-4o-mini"),
@@ -331,17 +334,18 @@ def step():
     b_state, rise10 = "", 0.0
     ambient = SIM_AMBIENT
     i_meas = 0.0
+    hotspot = scen.startswith("C")
 
     if mode == "시뮬레이션":
         t1, t2, t3 = st.session_state.sim
         amb = SIM_AMBIENT
         i_heat = 1.5 * (fault_pct / HW_MAX_PWM) if HW_MAX_PWM else 0
-        r = 1.20 if scen.startswith("B") else 0.65 if scen.startswith("C") else 0.50
+        r = 1.20 if scen.startswith("B") else 0.65 if hotspot else 0.50
         p_heat = (i_heat ** 2) * r * HEAT_GAIN
         def ut(t, extra=0.0):
             return t + ((p_heat + extra) / C_TH - K_COOL * (t - amb)) * DT
         t1, t2 = ut(t1), ut(t2)
-        t3 = -127 if scen.startswith("D") else ut(t3, 0.35 if scen.startswith("C") and fault_pct > 0 else 0.0)
+        t3 = -127 if scen.startswith("D") else ut(t3, 0.35 if hotspot and fault_pct > 0 else 0.0)
         if not scen.startswith("D"):
             t1, t2, t3 = [max(20.0, x) for x in (t1, t2, t3)]
             st.session_state.sim = [t1, t2, t3]
@@ -397,7 +401,7 @@ def step():
         power, kind, reasons = 0.0, "hard", ["영상 팽창"] if cam_bad else ["차단 유지"]
         status = "🛑 충전 차단"
     else:
-        power, kind, reasons = decide(score, margin, dtv, rise10, r, sensor_ok, b_state, cam_bad) if local_ai else (100.0, "ok", ["수동"])
+        power, kind, reasons = decide(score, tmax, margin, dtv, rise10, r, sensor_ok, b_state, cam_bad, hotspot) if local_ai else (100.0, "ok", ["수동"])
         if kind == "hard":
             power = 0.0
             st.session_state.latched = True
@@ -425,7 +429,7 @@ def step():
     soc = st.session_state.soc
 
     h1 = 0.0 if st.session_state.latched else float(fault_pct)
-    h2 = 0.5 * h1 if scen.startswith("C") else 0.0
+    h2 = 0.5 * h1 if hotspot else 0.0
     sendA(h1, h2, force_off=st.session_state.latched)
     sendB(power, blocked=st.session_state.latched, warn=(kind == "warn"),
            ai_block=("AI" in reason), swelling=cam_bad)
@@ -488,7 +492,7 @@ if run and ai_auto and not latest.get("NoData") and not st.session_state.latched
     st.session_state.last_ai = time.time()
 
 st.title("🛡️ Battery Sentinel")
-st.caption("AI·온도·영상 팽창으로 충전을 조절하거나 차단")
+st.caption("절대 32°C 초과 차단  ·  HotSpot은 주변+3°C에서도 차단")
 stt = latest["Status"]
 if "차단" in stt:
     st.error(stt)
