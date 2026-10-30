@@ -27,12 +27,12 @@ SIM_AMBIENT = 25.5
 STALE_LIMIT = 10
 I_FULL = 1.50
 SOC_PER_A = 0.08
+SCORE_ALERT = 80.0
 
 def to_hw_pwm(logical_pct):
     return float(np.clip(logical_pct / 100.0 * HW_MAX_PWM, 0, HW_MAX_PWM))
 
 def pct_cmd(pct):
-    """A는 0~9 = 0~90%, 10% 단위만"""
     pct = int(round(pct / 10.0) * 10)
     if pct >= 100:
         return "f"
@@ -147,8 +147,8 @@ for k, v in {
     "hist": pd.DataFrame(columns=["Time","T1","T2","T3","Delta_T","Score","Power","SoC","Ich","State","Amb","Rise10"]),
     "sim": [26.0, 26.1, 26.0], "soc": 20.0, "report": "대기", "decision": None,
     "serA": None, "serB": None, "last_ai": 0, "last_brief": 0, "last_status": "",
-    "last_alert": 0, "latched": False, "timeline": [], "last_cmdA": "", "last_cmdB": "",
-    "ambient": None, "last_b": None, "stale": 0,
+    "last_alert": 0, "last_score_alert": 0, "latched": False, "timeline": [],
+    "last_cmdA": "", "last_cmdB": "", "ambient": None, "last_b": None, "stale": 0,
 }.items():
     if k not in st.session_state:
         st.session_state[k] = v
@@ -192,10 +192,7 @@ local_ai = st.sidebar.toggle("로컬 AI 감속", True)
 ai_auto = st.sidebar.toggle("AI 자동분석", True)
 ai_ctrl = st.sidebar.toggle("AI 제어반영", False)
 run = st.sidebar.checkbox("실시간", False)
-fault_pct = st.sidebar.slider(
-    "고장 주입 히터 (%)", 0, 30, 0, 10,
-    help="10% 단위. A를 연결했을 때만 전달. 없으면 A 시리얼에서 직접."
-)
+fault_pct = st.sidebar.slider("고장 주입 히터 (%)", 0, 30, 0, 10, help="10% 단위. A 연결 시에만 전달.")
 if st.sidebar.button("충전량 20%로"):
     st.session_state.soc = 20.0
 if st.sidebar.button("🔓 차단 해제 (B에 r)"):
@@ -205,7 +202,6 @@ if st.sidebar.button("🔓 차단 해제 (B에 r)"):
         except Exception: pass
 
 def sendA(h1, h2, force_off=False):
-    """A는 선택. 없으면 무시. 차단 시 x는 추가 안전장치일 뿐."""
     if not (st.session_state.serA and st.session_state.serA.is_open):
         return
     try:
@@ -374,7 +370,6 @@ def step():
     alpha = 0.25
     power = 0.0 if st.session_state.latched else float(np.clip(p_power * (1 - alpha) + power * alpha, 0, 100))
 
-    # 가상 충전량: AI가 정한 속도에 비례
     i_ch = 0.0 if power <= 1 else I_FULL * (power / 100.0)
     if i_ch > 0 and st.session_state.soc < 100:
         st.session_state.soc = min(100.0, st.session_state.soc + i_ch * SOC_PER_A)
@@ -385,13 +380,18 @@ def step():
     sendA(h1, h2, force_off=st.session_state.latched)
     sendB(power, blocked=st.session_state.latched, warn=(kind == "warn"), ai_block=("AI" in reason))
 
-    if st.session_state.latched and time.time() - st.session_state.last_alert > 25:
+    now = time.time()
+    if st.session_state.latched and now - st.session_state.last_alert > 25:
         send_tg(f"충전 차단 {reason}")
-        st.session_state.last_alert = time.time()
+        st.session_state.last_alert = now
+    if score >= SCORE_ALERT and now - st.session_state.last_score_alert > 25:
+        send_tg(f"AI 위험도 {score:.0f}% (기준 {SCORE_ALERT:.0f}%) Tmax={tmax:.1f}")
+        st.session_state.last_score_alert = now
+
     if int(time.time()) % 2 == 0:
         append_log({"time": time.strftime("%H:%M:%S"), "T_max": round(float(tmax), 2),
                     "soc": round(soc, 1), "i": round(i_meas, 3), "speed": round(power, 1),
-                    "status": status, "reason": reason})
+                    "score": round(score, 1), "status": status, "reason": reason})
 
     st.session_state.hist = pd.concat([st.session_state.hist, pd.DataFrame([{
         "Time": time.strftime("%H:%M:%S"), "T1": t1, "T2": t2, "T3": t3, "Delta_T": dtv,
@@ -435,7 +435,7 @@ if run and ai_auto and not latest.get("NoData") and not st.session_state.latched
     st.session_state.last_ai = time.time()
 
 st.title("🛡️ Battery Sentinel")
-st.caption("AI·온도가 충전 속도를 정함  ·  히터(A)는 선택  ·  차단은 B 릴레이")
+st.caption("AI·온도가 충전 속도를 정함  ·  텔레그램: 차단 또는 AI 80% 이상")
 stt = latest["Status"]
 if "차단" in stt:
     st.error(stt)
@@ -476,11 +476,10 @@ for ev in reversed(st.session_state.timeline[-8:]):
     st.write(f"`{ev['time']}` {ev['status']} · {ev['power']:.0f}% · {ev['reason']}")
 if st.session_state.decision:
     st.write("**AI 의사결정**", st.session_state.decision)
-with st.expander("구성"):
-    st.write("필수: B (센서, LCD, LED, 릴레이 K1)")
-    st.write("선택: A (히터 PWM). 없어도 판정·충전 표시는 동작")
-    st.write("히터 슬라이더는 0/10/20/30%만. A 명령도 10% 단위")
-    st.write("차단 시 B가 K1을 끊음. A에 보내는 x는 추가 안전장치")
+with st.expander("텔레그램"):
+    st.write("차단 시: `충전 차단 ...`")
+    st.write(f"AI 위험도 {SCORE_ALERT:.0f}% 이상: `AI 위험도 xx%`")
+    st.write("같은 종류는 25초에 한 번. .env의 TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID 필요")
 if run:
     time.sleep(1)
     st.rerun()
