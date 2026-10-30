@@ -16,7 +16,9 @@ except Exception:
 st.set_page_config(page_title="Battery Sentinel 3.0", layout="wide")
 LOG_PATH = "control_log.csv"
 
-HW_MAX_PWM = 30.0
+HW_MAX_PWM = 30.0          # 보드로만 보냄. 화면에는 안 씀
+I_FULL = 1.50              # 가상 만충 전류 (A)
+SOC_RATE = 0.12            # 100% 속도일 때 초당 충전량 (%)
 T_CUTOFF = 45.0
 RISE_CUTOFF = 5.0
 DEV_WARN, DEV_CUTOFF = 2.0, 5.0
@@ -104,8 +106,8 @@ def ask_brief(s, timeline):
     if not c:
         return "AI 설정 없음"
     hist = " | ".join(f"{x['time']} {x['status']} {x['reason']}" for x in timeline[-4:]) or "없음"
-    p = f"""4줄. 1)위험 2)Isolation Forest 해석 3)전원 조절 이유 4)차단 가능성
-충전={s['Power']:.0f}% 단계={s.get('Level',0)} 실제PWM={s.get('HW',0):.0f}% Tmax={s['T_max']:.1f} ΔT={s['Delta_T']:.2f} R={s['R_est']:.2f} 점수={s['AI_Score']:.1f} 상태={s['Status']} 이유={s.get('Reason','')} 최근={hist}
+    p = f"""4줄. 1)위험 2)Isolation Forest 해석 3)충전을 왜 조절했는지 4)차단 가능성
+충전량={s.get('SoC',0):.1f}% 속도={s['Power']:.0f}% 전류={s.get('I_ch',0):.2f}A Tmax={s['T_max']:.1f} ΔT={s['Delta_T']:.2f} 점수={s['AI_Score']:.1f} 상태={s['Status']} 이유={s.get('Reason','')} 최근={hist}
 이전 호출은 기억하지 않는다."""
     try:
         r = c.chat.completions.create(model=os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-4o-mini"),
@@ -138,8 +140,8 @@ def send_tg(msg):
             pass
 
 for k, v in {
-    "hist": pd.DataFrame(columns=["Time","T1","T2","T3","Delta_T","V","I","R","Score","Power","Level","H1","H2","HW","Relay","State"]),
-    "sim": [26.0, 26.1, 26.0], "report": "대기", "decision": None,
+    "hist": pd.DataFrame(columns=["Time","T1","T2","T3","Delta_T","V","I","R","Score","Power","SoC","Ich","Relay","State"]),
+    "sim": [26.0, 26.1, 26.0], "soc": 20.0, "report": "대기", "decision": None,
     "serA": None, "serB": None, "last_ai": 0, "last_brief": 0, "last_status": "",
     "last_alert": 0, "latched": False, "timeline": [], "last_cmdA": "", "last_cmdB": "",
 }.items():
@@ -147,13 +149,12 @@ for k, v in {
         st.session_state[k] = v
 
 st.sidebar.title("제어판")
-st.sidebar.caption(f"모델: {model_source} | PWM 상한 {HW_MAX_PWM:.0f}%")
-st.sidebar.caption("B: 1~4/w/a/c/x/s/p/r  |  A: h/j/x")
+st.sidebar.caption(f"모델: {model_source}")
 mode = st.sidebar.radio("모드", ["시뮬레이션", "하드웨어"])
 ports = [p.device for p in serial.tools.list_ports.comports()]
 if mode == "하드웨어":
-    pa = st.sidebar.selectbox("ESP32 A (히터 PWM)", ports or ["COM3"])
-    pb = st.sidebar.selectbox("ESP32 B (센서·LCD)", ports or ["COM4"])
+    pa = st.sidebar.selectbox("ESP32 A (히터)", ports or ["COM3"])
+    pb = st.sidebar.selectbox("ESP32 B (센서·표시)", ports or ["COM4"])
     if st.sidebar.button("A 연결"):
         try:
             if st.session_state.serA: st.session_state.serA.close()
@@ -173,7 +174,9 @@ local_ai = st.sidebar.toggle("로컬 AI 감속", True)
 ai_auto = st.sidebar.toggle("AI 자동분석", True)
 ai_ctrl = st.sidebar.toggle("AI 제어반영", False)
 run = st.sidebar.checkbox("실시간", False)
-if st.sidebar.button("🔓 차단 해제 (B에 r)"):
+if st.sidebar.button("가상 충전량 20%로"):
+    st.session_state.soc = 20.0
+if st.sidebar.button("🔓 차단 해제"):
     st.session_state.latched = False
     if st.session_state.serB and st.session_state.serB.is_open:
         try: st.session_state.serB.write(b"r")
@@ -191,7 +194,6 @@ def sendA(hw1, hw2, force_off=False):
         pass
 
 def sendB(power, blocked=False, warn=False, ai_block=False):
-    """B: 1~4 충전단계, w 경고, a AI차단, c/x 릴레이, s/p LED"""
     if not (st.session_state.serB and st.session_state.serB.is_open):
         return
     try:
@@ -219,8 +221,7 @@ def parse_b_line(line):
         except Exception: return default
     return {
         "T1": fnum(p[1]), "T2": fnum(p[2]), "T3": fnum(p[3]),
-        "rise5": fnum(p[5], 0), "dev": fnum(p[6], 0),
-        "state": p[8].strip() if len(p) > 8 else "",
+        "rise5": fnum(p[5], 0), "state": p[8].strip() if len(p) > 8 else "",
         "V": fnum(p[11], 12), "I": fnum(p[12], 0),
     }
 
@@ -233,9 +234,9 @@ def step():
         t1, t2, t3 = st.session_state.sim
         amb = 25.5
         hw_now = to_hw_pwm(p_power)
-        i_cmd = 1.5 * (hw_now / HW_MAX_PWM) if HW_MAX_PWM else 0
+        i_heat = 1.5 * (hw_now / HW_MAX_PWM) if HW_MAX_PWM else 0
         r = 1.20 if scen.startswith("B") else 0.65 if scen.startswith("C") else 0.50
-        p_heat = (i_cmd ** 2) * r * HEAT_GAIN
+        p_heat = (i_heat ** 2) * r * HEAT_GAIN
         def ut(t, extra=0.0):
             return t + ((p_heat + extra) / C_TH - K_COOL * (t - amb)) * DT
         t1, t2 = ut(t1), ut(t2)
@@ -243,21 +244,21 @@ def step():
         if not scen.startswith("D"):
             t1, t2, t3 = [max(20.0, x) for x in (t1, t2, t3)]
             st.session_state.sim = [t1, t2, t3]
-        v, i = 12.0, i_cmd
+        v = 12.0
         if len(st.session_state.hist) >= 5:
             rise5 = max(t1, t2, t3) - max(st.session_state.hist.iloc[-5][["T1", "T2", "T3"]])
     else:
         t1 = t2 = t3 = 25.0
-        v, i, r = 12.0, 0.0, 0.5
+        v, r = 12.0, 0.5
         if st.session_state.serB and st.session_state.serB.is_open:
             try:
                 raw = st.session_state.serB.readline().decode(errors="ignore").strip()
                 parsed = parse_b_line(raw)
                 if parsed:
                     t1, t2, t3 = parsed["T1"], parsed["T2"], parsed["T3"]
-                    v, i, rise5 = parsed["V"], parsed["I"], parsed["rise5"]
+                    v, rise5 = parsed["V"], parsed["rise5"]
                     b_state = parsed["state"]
-                    r = (v / i) if i > 0.05 else 0.5
+                    r = 0.5
             except Exception:
                 pass
 
@@ -273,13 +274,13 @@ def step():
         if b_state == "BLOCKED":
             st.session_state.latched = True
         power, kind, reasons = 0.0, "hard", ["차단 유지"]
-        status = "🛑 차단 (리셋 필요)"
+        status = "🛑 충전 차단"
     else:
         power, kind, reasons = decide(score, tmax, dtv, dtdt, r, rise5, sensor_ok, b_state) if local_ai else (100.0, "ok", ["수동"])
         if kind == "hard":
             power = 0.0
             st.session_state.latched = True
-            status = "🛑 차단"
+            status = "🛑 충전 차단"
         else:
             if ai_ctrl and st.session_state.decision:
                 dec = st.session_state.decision
@@ -296,30 +297,34 @@ def step():
     reason = " / ".join(reasons)
     alpha = 0.25
     power = 0.0 if st.session_state.latched else float(np.clip(p_power * (1 - alpha) + power * alpha, 0, 100))
-    level = 0 if st.session_state.latched else charge_level(power)
+
+    # 가상 충전 전류·충전량 (실제 충전 아님)
+    i_ch = 0.0 if st.session_state.latched or power <= 1 else I_FULL * (power / 100.0)
+    if i_ch > 0 and st.session_state.soc < 100:
+        st.session_state.soc = min(100.0, st.session_state.soc + SOC_RATE * (power / 100.0))
+    soc = st.session_state.soc
+
     hw = 0.0 if st.session_state.latched else to_hw_pwm(power)
     h1 = hw * 0.85
     h2 = min(HW_MAX_PWM, hw * 0.5) if (scen.startswith("C") and not st.session_state.latched and power > 15) else 0.0
-    ai_block = st.session_state.latched and ("AI" in reason or kind == "hard")
-
     sendA(h1, h2, force_off=st.session_state.latched)
-    sendB(power, blocked=st.session_state.latched, warn=(kind == "warn"), ai_block=ai_block)
+    sendB(power, blocked=st.session_state.latched, warn=(kind == "warn"), ai_block=("AI" in reason))
 
     if st.session_state.latched and time.time() - st.session_state.last_alert > 25:
-        send_tg(f"차단 {reason}")
+        send_tg(f"충전 차단 {reason}")
         st.session_state.last_alert = time.time()
     if int(time.time()) % 2 == 0:
         append_log({"time": time.strftime("%H:%M:%S"), "T_max": round(float(tmax), 2),
-                    "Power": round(power, 1), "Level": level, "HW": round(hw, 1),
+                    "SoC": round(soc, 1), "Ich": round(i_ch, 2), "Power": round(power, 1),
                     "status": status, "reason": reason})
 
     st.session_state.hist = pd.concat([st.session_state.hist, pd.DataFrame([{
         "Time": time.strftime("%H:%M:%S"), "T1": t1, "T2": t2, "T3": t3, "Delta_T": dtv,
-        "V": v, "I": i, "R": r, "Score": score, "Power": power, "Level": level,
-        "H1": h1, "H2": h2, "HW": hw, "Relay": int(not st.session_state.latched), "State": b_state
+        "V": v, "I": i_ch, "R": r, "Score": score, "Power": power, "SoC": soc, "Ich": i_ch,
+        "Relay": int(not st.session_state.latched), "State": b_state
     }])], ignore_index=True).tail(90)
     return {"T_max": tmax, "Delta_T": dtv, "R_est": r, "AI_Score": score, "Status": status,
-            "Power": power, "H1": h1, "H2": h2, "HW": hw, "Level": level, "Reason": reason}
+            "Power": power, "SoC": soc, "I_ch": i_ch, "Reason": reason}
 
 if run or len(st.session_state.hist) == 0:
     latest = step()
@@ -327,7 +332,7 @@ else:
     h = st.session_state.hist.iloc[-1]
     latest = {"T_max": max(h.T1, h.T2, h.T3), "Delta_T": h.Delta_T, "R_est": h.R,
               "AI_Score": h.Score, "Status": "일시정지", "Power": h.Power,
-              "H1": h.H1, "H2": h.H2, "HW": h.HW, "Level": h.Level, "Reason": ""}
+              "SoC": h.SoC, "I_ch": h.Ich, "Reason": ""}
 
 if run:
     interval = 20 if mode == "시뮬레이션" else 80
@@ -345,7 +350,7 @@ if run and ai_auto and not st.session_state.latched and latest["AI_Score"] >= 18
     st.session_state.last_ai = time.time()
 
 st.title("🛡️ Battery Sentinel 3.0")
-st.caption("B: 충전단계 1~4 · w 경고 · a AI차단  |  실제 PWM 최대 30%")
+st.caption("가상 충전 · 온도로 속도를 줄이거나 차단")
 if "차단" in latest["Status"]:
     st.error(latest["Status"])
 elif "⚠️" in latest["Status"] or "저속" in latest["Status"] or "제한" in latest["Status"]:
@@ -353,21 +358,21 @@ elif "⚠️" in latest["Status"] or "저속" in latest["Status"] or "제한" in
 else:
     st.success(latest["Status"])
 
-c = st.columns(6)
-c[0].metric("위험도", f"{latest['AI_Score']:.1f}%")
-c[1].metric("충전", f"{latest['Power']:.0f}%")
-c[2].metric("LED 단계", f"{latest.get('Level', 0)}/4")
-c[3].metric("실제 PWM", f"{latest.get('HW', 0):.0f}%")
-c[4].metric("Tmax", f"{latest['T_max']:.1f}°C")
-c[5].metric("ΔT", f"{latest['Delta_T']:.2f}°C")
+c = st.columns(5)
+c[0].metric("충전량", f"{latest.get('SoC', 0):.1f}%")
+c[1].metric("충전 전류", f"{latest.get('I_ch', 0):.2f} A")
+c[2].metric("충전 속도", f"{latest['Power']:.0f}%")
+c[3].metric("최고 온도", f"{latest['T_max']:.1f}°C")
+c[4].metric("위험도", f"{latest['AI_Score']:.1f}%")
 st.caption(f"판정: {latest.get('Reason','')}")
+st.progress(min(1.0, latest.get("SoC", 0) / 100.0))
 
 g1, g2 = st.columns(2)
 with g1:
     f = go.Figure()
-    f.add_trace(go.Scatter(x=st.session_state.hist.Time, y=st.session_state.hist.Score, name="위험도"))
-    f.add_trace(go.Scatter(x=st.session_state.hist.Time, y=st.session_state.hist.Power, name="충전%"))
-    f.add_trace(go.Scatter(x=st.session_state.hist.Time, y=st.session_state.hist.HW, name="실제PWM"))
+    f.add_trace(go.Scatter(x=st.session_state.hist.Time, y=st.session_state.hist.SoC, name="충전량 %"))
+    f.add_trace(go.Scatter(x=st.session_state.hist.Time, y=st.session_state.hist.Power, name="충전 속도 %"))
+    f.add_trace(go.Scatter(x=st.session_state.hist.Time, y=st.session_state.hist.Ich * 50, name="전류×50"))
     f.update_layout(height=240, margin=dict(l=0, r=0, t=8, b=0))
     st.plotly_chart(f, use_container_width=True)
 with g2:
@@ -377,18 +382,13 @@ with g2:
     f2.update_layout(height=240, margin=dict(l=0, r=0, t=8, b=0))
     st.plotly_chart(f2, use_container_width=True)
 
-st.markdown("**AI 브리핑 (자동)**")
+st.markdown("**AI 브리핑**")
 st.info(st.session_state.report)
-st.markdown("**제어 타임라인**")
+st.markdown("**기록**")
 for ev in reversed(st.session_state.timeline[-8:]):
-    st.write(f"`{ev['time']}` {ev['status']} · {ev['power']:.0f}% · {ev['reason']}")
+    st.write(f"`{ev['time']}` {ev['status']} · 속도 {ev['power']:.0f}% · {ev['reason']}")
 if st.session_state.decision:
     st.write("**AI 의사결정**", st.session_state.decision)
-with st.expander("프로토콜"):
-    st.write("충전 100% → B에 `s4c`, A에 최대 30% (`h3` 근처)")
-    st.write("경고 → `w` (LCD CAUTION 3초)")
-    st.write("AI/하드 차단 → `pxa` (LED OFF, K1 OFF, CAUSE: AI ANOMALY)")
-    st.write("팽창은 나중에 `k`")
 if run:
     time.sleep(1)
     st.rerun()
