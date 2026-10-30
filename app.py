@@ -17,8 +17,8 @@ st.set_page_config(page_title="Battery Sentinel 3.0", layout="wide")
 LOG_PATH = "control_log.csv"
 
 HW_MAX_PWM = 30.0
-T_ABS_CUTOFF = 32.0      # 절대온도 32°C 초과 시 차단
-MARGIN_HOTSPOT = 3.0     # HotSpot: 주변 +3°C 이상 시 차단
+T_ABS_CUTOFF = 32.0
+MARGIN_HOTSPOT = 3.0
 MARGIN_SLOW = 1.5
 RISE_CUTOFF = 1.0
 RISE_WARN = 0.5
@@ -117,7 +117,7 @@ def ask_brief(s, timeline):
         return "AI 설정 없음"
     hist = " | ".join(f"{x['time']} {x['status']} {x['reason']}" for x in timeline[-4:]) or "없음"
     p = f"""4줄. 1)위험 2)Isolation Forest 해석 3)충전을 왜 조절했는지 4)차단 가능성
-충전량={s.get('SoC',0):.1f}% 속도={s['Power']:.0f}% Tmax={s['T_max']:.1f} 주변대비={s.get('Margin',0):+.1f} 점수={s['AI_Score']:.1f} 영상={s.get('Cam','-')} 상태={s['Status']} 이유={s.get('Reason','')} 최근={hist}
+충전량={s.get('SoC',0):.1f}% 속도={s['Power']:.0f}% 전류={s.get('I_ch',0):.2f}A Tmax={s['T_max']:.1f} 주변대비={s.get('Margin',0):+.1f} 점수={s['AI_Score']:.1f} 영상={s.get('Cam','-')} 상태={s['Status']} 이유={s.get('Reason','')} 최근={hist}
 이전 호출은 기억하지 않는다."""
     try:
         r = c.chat.completions.create(model=os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-4o-mini"),
@@ -324,7 +324,7 @@ def no_data(status, reason):
     sendB(0.0)
     cam = st.session_state.cam
     return {"T_max": float("nan"), "Delta_T": 0.0, "R_est": 0.5, "AI_Score": 0.0,
-            "Status": status, "Power": 0.0, "SoC": st.session_state.soc, "I_meas": 0.0,
+            "Status": status, "Power": 0.0, "SoC": st.session_state.soc, "I_ch": 0.0,
             "Reason": reason, "Margin": float("nan"), "Rise10": 0.0, "Ambient": float("nan"),
             "Cam": f"{cam['tag']} {cam['prob']:.0%}", "NoData": True}
 
@@ -333,7 +333,6 @@ def step():
     p_power = float(prev["Power"]) if prev is not None else 0.0
     b_state, rise10 = "", 0.0
     ambient = SIM_AMBIENT
-    i_meas = 0.0
     hotspot = scen.startswith("C")
 
     if mode == "시뮬레이션":
@@ -350,7 +349,6 @@ def step():
             t1, t2, t3 = [max(20.0, x) for x in (t1, t2, t3)]
             st.session_state.sim = [t1, t2, t3]
         v = 12.0
-        i_meas = i_heat
         if len(st.session_state.hist) >= 10:
             rise10 = max(t1, t2, t3) - float(st.session_state.hist.iloc[-10][["T1", "T2", "T3"]].max())
     else:
@@ -377,10 +375,9 @@ def step():
         else:
             t1, t2, t3 = data["T1"], data["T2"], data["T3"]
             v = data["V"] if np.isfinite(data["V"]) else 12.0
-            i_meas = data["I"] if np.isfinite(data["I"]) else 0.0
             rise10 = data["rise10"] if np.isfinite(data["rise10"]) else 0.0
             b_state = data["state"]
-            r = (v / i_meas) if i_meas > 0.05 else 0.5
+            r = 0.5
 
     cam = read_cam()
     st.session_state.cam = cam
@@ -423,6 +420,7 @@ def step():
     alpha = 0.25
     power = 0.0 if st.session_state.latched else float(np.clip(p_power * (1 - alpha) + power * alpha, 0, 100))
 
+    # 충전 전류 = 충전 속도에 비례
     i_ch = 0.0 if power <= 1 else I_FULL * (power / 100.0)
     if i_ch > 0 and st.session_state.soc < 100:
         st.session_state.soc = min(100.0, st.session_state.soc + i_ch * SOC_PER_A)
@@ -444,17 +442,17 @@ def step():
 
     if int(time.time()) % 2 == 0:
         append_log({"time": time.strftime("%H:%M:%S"), "T_max": round(float(tmax), 2),
-                    "soc": round(soc, 1), "i": round(i_meas, 3), "speed": round(power, 1),
+                    "soc": round(soc, 1), "i": round(i_ch, 3), "speed": round(power, 1),
                     "score": round(score, 1), "cam": cam["tag"], "status": status, "reason": reason})
 
     st.session_state.hist = pd.concat([st.session_state.hist, pd.DataFrame([{
         "Time": time.strftime("%H:%M:%S"), "T1": t1, "T2": t2, "T3": t3, "Delta_T": dtv,
-        "Score": score, "Power": power, "SoC": soc, "Ich": i_meas,
+        "Score": score, "Power": power, "SoC": soc, "Ich": i_ch,
         "Cam": f"{cam['tag']} {cam['prob']:.0%}", "State": b_state,
         "Amb": ambient, "Rise10": rise10
     }])], ignore_index=True).tail(90)
     return {"T_max": tmax, "Delta_T": dtv, "R_est": r, "AI_Score": score, "Status": status,
-            "Power": power, "SoC": soc, "I_meas": i_meas, "Reason": reason,
+            "Power": power, "SoC": soc, "I_ch": i_ch, "Reason": reason,
             "Margin": margin, "Rise10": rise10, "Ambient": ambient,
             "Cam": f"{cam['tag']} {cam['prob']:.0%}"}
 
@@ -470,7 +468,7 @@ else:
     tm = max(h.T1, h.T2, h.T3)
     cam = st.session_state.cam
     latest = {"T_max": tm, "Delta_T": h.Delta_T, "R_est": 0.5, "AI_Score": h.Score,
-              "Status": "일시정지", "Power": h.Power, "SoC": h.SoC, "I_meas": h.Ich,
+              "Status": "일시정지", "Power": h.Power, "SoC": h.SoC, "I_ch": h.Ich,
               "Reason": "", "Margin": tm - h.Amb if np.isfinite(h.Amb) else float("nan"),
               "Rise10": h.Rise10, "Ambient": h.Amb, "Cam": f"{cam['tag']} {cam['prob']:.0%}"}
 
@@ -492,7 +490,7 @@ if run and ai_auto and not latest.get("NoData") and not st.session_state.latched
     st.session_state.last_ai = time.time()
 
 st.title("🛡️ Battery Sentinel")
-st.caption("절대 32°C 초과 차단  ·  HotSpot은 주변+3°C에서도 차단")
+st.caption("절대 32°C 초과 차단  ·  HotSpot은 주변+3°C에서도 차단  ·  전류는 충전 속도에 비례")
 stt = latest["Status"]
 if "차단" in stt:
     st.error(stt)
@@ -506,7 +504,7 @@ else:
 c = st.columns(6)
 c[0].metric("충전량", f"{latest.get('SoC', 0):.1f}%")
 c[1].metric("충전 속도", f"{latest['Power']:.0f}%")
-c[2].metric("전류 (INA219)", f"{latest.get('I_meas', 0):.2f} A")
+c[2].metric("충전 전류", f"{latest.get('I_ch', 0):.2f} A")
 c[3].metric("최고 온도", fmt_c(latest["T_max"]), delta=f"주변 {fmt_c(latest.get('Margin'), True)}", delta_color="off")
 c[4].metric("AI 위험도", f"{latest['AI_Score']:.1f}%")
 c[5].metric("영상 판정", latest.get("Cam", "-"))
@@ -518,7 +516,7 @@ with g1:
     f = go.Figure()
     f.add_trace(go.Scatter(x=st.session_state.hist.Time, y=st.session_state.hist.SoC, name="충전량 %"))
     f.add_trace(go.Scatter(x=st.session_state.hist.Time, y=st.session_state.hist.Power, name="충전 속도 %"))
-    f.add_trace(go.Scatter(x=st.session_state.hist.Time, y=st.session_state.hist.Score, name="AI 위험도"))
+    f.add_trace(go.Scatter(x=st.session_state.hist.Time, y=st.session_state.hist.Ich * 50, name="전류×50"))
     f.update_layout(height=240, margin=dict(l=0, r=0, t=8, b=0))
     st.plotly_chart(f, use_container_width=True)
 with g2:
