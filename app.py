@@ -476,10 +476,7 @@ for ev in reversed(st.session_state.timeline[-8:]):
     st.write(f"`{ev['time']}` {ev['status']} · {ev['power']:.0f}% · {ev['reason']}")
 if st.session_state.decision:
     st.write("**AI 의사결정**", st.session_state.decision)
-with st.expander("텔레그램"):
-    st.write("차단 시: `충전 차단 ...`")
-    st.write(f"AI 위험도 {SCORE_ALERT:.0f}% 이상: `AI 위험도 xx%`")
-    st.write("같은 종류는 25초에 한 번. .env의 TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID 필요")
+    
 if run:
     time.sleep(1)
     st.rerun()
