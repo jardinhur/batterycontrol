@@ -1,0 +1,10 @@
+streamlit
+pandas
+numpy
+plotly
+scikit-learn
+joblib
+openai
+python-dotenv
+requests
+pyserial
