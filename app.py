@@ -117,7 +117,7 @@ def ask_brief(s, timeline):
         return "AI 설정 없음"
     hist = " | ".join(f"{x['time']} {x['status']} {x['reason']}" for x in timeline[-4:]) or "없음"
     p = f"""4줄. 1)위험 2)Isolation Forest 해석 3)충전을 왜 조절했는지 4)차단 가능성
-충전량={s.get('SoC',0):.1f}% 속도={s['Power']:.0f}% 전류={s.get('I_ch',0):.2f}A Tmax={s['T_max']:.1f} 주변대비={s.get('Margin',0):+.1f} 점수={s['AI_Score']:.1f} 영상={s.get('Cam','-')} 상태={s['Status']} 이유={s.get('Reason','')} 최근={hist}
+충전량={s.get('SoC',0):.1f}% 속도={s['Power']:.0f}% 전류={s.get('I_ch',0):.2f}A Tmax={s['T_max']:.1f} 점수={s['AI_Score']:.1f} 영상={s.get('Cam','-')} 상태={s['Status']} 이유={s.get('Reason','')} 최근={hist}
 이전 호출은 기억하지 않는다."""
     try:
         r = c.chat.completions.create(model=os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-4o-mini"),
@@ -132,7 +132,7 @@ def ask_decision(s):
     if not c:
         return d
     try:
-        p = f"""JSON만. Tmax={s['T_max']:.1f} 주변대비={s.get('Margin',0):+.1f} score={s['AI_Score']:.1f}
+        p = f"""JSON만. Tmax={s['T_max']:.1f} score={s['AI_Score']:.1f}
 {{"recommended_power":0-100,"should_block":false,"reasoning":""}}"""
         r = c.chat.completions.create(model=os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-4o-mini"),
             messages=[{"role": "user", "content": p}], temperature=0.2, max_tokens=160,
@@ -157,9 +157,16 @@ for k, v in {
     "last_ai": 0, "last_brief": 0, "last_status": "",
     "last_alert": 0, "last_score_alert": 0, "latched": False, "timeline": [],
     "last_cmdA": "", "last_cmdB": "", "ambient": None, "last_b": None, "stale": 0,
+    "serial_log": [],
 }.items():
     if k not in st.session_state:
         st.session_state[k] = v
+
+def push_log(s):
+    if not s:
+        return
+    st.session_state.serial_log.append(s)
+    st.session_state.serial_log = st.session_state.serial_log[-40:]
 
 st.sidebar.title("제어판")
 st.sidebar.caption(f"모델: {model_source}")
@@ -186,6 +193,7 @@ if mode == "하드웨어":
             st.session_state.ambient = None
             st.session_state.last_b = None
             st.session_state.stale = 0
+            st.session_state.serial_log = []
             st.sidebar.success("B 연결")
         except Exception as e:
             st.sidebar.error(str(e))
@@ -285,6 +293,7 @@ def read_b(ser):
     last = None
     for raw in lines:
         s = raw.decode(errors="ignore").strip()
+        push_log(s)
         handle_comment(s)
         d = parse_b_line(s)
         if d:
@@ -326,14 +335,15 @@ def no_data(status, reason):
     return {"T_max": float("nan"), "Delta_T": 0.0, "R_est": 0.5, "AI_Score": 0.0,
             "Status": status, "Power": 0.0, "SoC": st.session_state.soc, "I_ch": 0.0,
             "Reason": reason, "Margin": float("nan"), "Rise10": 0.0, "Ambient": float("nan"),
-            "Cam": f"{cam['tag']} {cam['prob']:.0%}", "NoData": True}
+            "Cam": f"{cam['tag']} {cam['prob']:.0%}", "NoData": True, "BState": ""}
 
 def step():
     prev = st.session_state.hist.iloc[-1] if len(st.session_state.hist) else None
     p_power = float(prev["Power"]) if prev is not None else 0.0
     b_state, rise10 = "", 0.0
     ambient = SIM_AMBIENT
-    hotspot = scen.startswith("C")
+    # 하드웨어에서는 주변+3 HotSpot 차단을 쓰지 않음
+    hotspot = scen.startswith("C") and mode == "시뮬레이션"
 
     if mode == "시뮬레이션":
         t1, t2, t3 = st.session_state.sim
@@ -395,7 +405,7 @@ def step():
     if st.session_state.latched or b_state == "BLOCKED" or cam_bad:
         if b_state == "BLOCKED" or cam_bad:
             st.session_state.latched = True
-        power, kind, reasons = 0.0, "hard", ["영상 팽창"] if cam_bad else ["차단 유지"]
+        power, kind, reasons = 0.0, "hard", ["영상 팽창"] if cam_bad else (["B보드 BLOCKED"] if b_state == "BLOCKED" else ["차단 유지"])
         status = "🛑 충전 차단"
     else:
         power, kind, reasons = decide(score, tmax, margin, dtv, rise10, r, sensor_ok, b_state, cam_bad, hotspot) if local_ai else (100.0, "ok", ["수동"])
@@ -419,8 +429,6 @@ def step():
     reason = " / ".join(reasons)
     alpha = 0.25
     power = 0.0 if st.session_state.latched else float(np.clip(p_power * (1 - alpha) + power * alpha, 0, 100))
-
-    # 충전 전류 = 충전 속도에 비례
     i_ch = 0.0 if power <= 1 else I_FULL * (power / 100.0)
     if i_ch > 0 and st.session_state.soc < 100:
         st.session_state.soc = min(100.0, st.session_state.soc + i_ch * SOC_PER_A)
@@ -454,7 +462,7 @@ def step():
     return {"T_max": tmax, "Delta_T": dtv, "R_est": r, "AI_Score": score, "Status": status,
             "Power": power, "SoC": soc, "I_ch": i_ch, "Reason": reason,
             "Margin": margin, "Rise10": rise10, "Ambient": ambient,
-            "Cam": f"{cam['tag']} {cam['prob']:.0%}"}
+            "Cam": f"{cam['tag']} {cam['prob']:.0%}", "BState": b_state}
 
 def fmt_c(x, signed=False):
     if x is None or not np.isfinite(x):
@@ -470,7 +478,8 @@ else:
     latest = {"T_max": tm, "Delta_T": h.Delta_T, "R_est": 0.5, "AI_Score": h.Score,
               "Status": "일시정지", "Power": h.Power, "SoC": h.SoC, "I_ch": h.Ich,
               "Reason": "", "Margin": tm - h.Amb if np.isfinite(h.Amb) else float("nan"),
-              "Rise10": h.Rise10, "Ambient": h.Amb, "Cam": f"{cam['tag']} {cam['prob']:.0%}"}
+              "Rise10": h.Rise10, "Ambient": h.Amb, "Cam": f"{cam['tag']} {cam['prob']:.0%}",
+              "BState": h.State}
 
 if run:
     interval = 20 if mode == "시뮬레이션" else 80
@@ -490,7 +499,7 @@ if run and ai_auto and not latest.get("NoData") and not st.session_state.latched
     st.session_state.last_ai = time.time()
 
 st.title("🛡️ Battery Sentinel")
-st.caption("절대 32°C 초과 차단  ·  HotSpot은 주변+3°C에서도 차단  ·  전류는 충전 속도에 비례")
+st.caption("B·앱 모두 절대 28°C 차단  ·  하드웨어에서는 주변+3 HotSpot 미사용")
 stt = latest["Status"]
 if "차단" in stt:
     st.error(stt)
@@ -507,8 +516,8 @@ c[1].metric("충전 속도", f"{latest['Power']:.0f}%")
 c[2].metric("충전 전류", f"{latest.get('I_ch', 0):.2f} A")
 c[3].metric("최고 온도", fmt_c(latest["T_max"]), delta=f"주변 {fmt_c(latest.get('Margin'), True)}", delta_color="off")
 c[4].metric("AI 위험도", f"{latest['AI_Score']:.1f}%")
-c[5].metric("영상 판정", latest.get("Cam", "-"))
-st.caption(f"판단: {latest.get('Reason','')}  |  10초 상승 {latest.get('Rise10', 0):.2f}°C  |  주변 {fmt_c(latest.get('Ambient'))}")
+c[5].metric("B 상태", latest.get("BState") or "-")
+st.caption(f"판단: {latest.get('Reason','')}  |  영상 {latest.get('Cam','-')}  |  10초 상승 {latest.get('Rise10', 0):.2f}°C  |  주변 {fmt_c(latest.get('Ambient'))}")
 st.progress(min(1.0, latest.get("SoC", 0) / 100.0))
 
 g1, g2 = st.columns(2)
@@ -532,6 +541,9 @@ for ev in reversed(st.session_state.timeline[-8:]):
     st.write(f"`{ev['time']}` {ev['status']} · {ev['power']:.0f}% · {ev['reason']}")
 if st.session_state.decision:
     st.write("**AI 의사결정**", st.session_state.decision)
+
+st.markdown("**B 시리얼**")
+st.code("\n".join(st.session_state.serial_log) or "아직 없음. 하드웨어 모드에서 B 연결 후 실시간을 켜세요.")
 if run:
     time.sleep(1)
     st.rerun()
